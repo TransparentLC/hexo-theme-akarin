@@ -167,6 +167,10 @@ article.mdui-typo img {
         0 3px 4px 0 rgba(0, 0, 0, .14),
         0 1px 8px 0 rgba(0, 0, 0, .12);
 }
+article.mdui-typo p:last-of-type:after {
+    display: inline;
+    content: var(--post-ending);
+}
 .medium-zoom-image.medium-zoom-image--opened,
 .medium-zoom-overlay {
     z-index: 10000;

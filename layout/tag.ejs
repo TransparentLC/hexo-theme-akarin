@@ -1,4 +1,3 @@
-<div class="mdui-typo-display-1 mdui-text-center">标签：<%= page.tag %></div>
 <% page.posts.each(post => { %>
     <%- partial('partials/post-entry', { post }) %>
 <% }); %>

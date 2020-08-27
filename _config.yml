@@ -31,6 +31,7 @@ uiux:
     mdui_primary_color: pink
     mdui_accent_color: pink
     post_thumbnail_color: '#03a9f4'
+    post_ending: ✨
 
 post_entry:
     excerpt: 120

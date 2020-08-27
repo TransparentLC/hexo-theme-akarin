@@ -1,3 +1,55 @@
+/* 导入思源黑体 */
+@font-face {
+    font-family: 'Noto Sans CJK SC';
+    font-style: normal;
+    font-weight: 100;
+    src: local('Noto Sans CJK SC Thin'), local('Source Han Sans SC ExtraLight'), local('Source Han Sans CN ExtraLight');
+}
+@font-face {
+    font-family: 'Noto Sans CJK SC';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Noto Sans CJK SC Light'), local('Source Han Sans SC Light'), local('Source Han Sans CN Light');
+}
+@font-face {
+    font-family: 'Noto Sans CJK SC';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Noto Sans CJK SC Regular'), local('Source Han Sans SC Regular'), local('Source Han Sans CN Regular');
+}
+@font-face {
+    font-family: 'Noto Sans CJK SC';
+    font-style: normal;
+    font-weight: 500;
+    src: local('Noto Sans CJK SC Medium'), local('Source Han Sans SC Medium'), local('Source Han Sans CN Medium');
+}
+@font-face {
+    font-family: 'Noto Sans CJK SC';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Noto Sans CJK SC Bold'), local('Source Han Sans SC Bold'), local('Source Han Sans CN Bold');
+}
+@font-face {
+    font-family: 'Noto Sans CJK SC';
+    font-style: normal;
+    font-weight: 900;
+    src: local('Noto Sans CJK SC Black'), local('Source Han Sans SC Heavy'), local('Source Han Sans CN Heavy');
+}
+body {
+    font-family:
+        Roboto,
+        Noto,
+        "Helvetica Neue",
+        Helvetica,
+        "Noto Sans CJK SC",
+        "PingFang SC",
+        "Hiragino Sans GB",
+        "Microsoft YaHei",
+        "微软雅黑",
+        Arial,
+        sans-serif;
+}
+
 /* 抽屉菜单 */
 #akarin-drawer-media {
     position: relative;
@@ -57,7 +109,7 @@
     transform: rotate(360deg);
 }
 
-/* 文章Entry */
+/* 文章Entry和本体 */
 .akarin-post-entry-bg {
     min-height: 180px;
     position: relative;
@@ -73,6 +125,22 @@
         min-height: 240px;
     }
 }
+.akarin-post-bg {
+    min-height: 240px;
+    position: relative;
+    background-color: var(--post-thumbnail-color);
+}
+@media (min-width:600px) {
+    .akarin-post-bg {
+        min-height: 270px;
+    }
+}
+@media (min-width:1024px) {
+    .akarin-post-bg {
+        min-height: 300px;
+    }
+}
+.akarin-post-title,
 .akarin-post-entry-title {
     position: absolute;
     bottom: 0;
@@ -80,12 +148,35 @@
 }
 
 /* 文章内容 */
-.mdui-typo pre {
+@media (min-width:600px) {
+    article.mdui-typo {
+        font-size: 16px;
+    }
+}
+article.mdui-typo pre {
     font-size: 1em;
 }
-.mdui-typo pre,
-.mdui-typo pre code {
+article.mdui-typo pre,
+article.mdui-typo pre code {
     line-height: 1.25;
+}
+article.mdui-typo img {
+    max-height: 480px;
+    box-shadow:
+        0 3px 3px -2px rgba(0, 0, 0, .2),
+        0 3px 4px 0 rgba(0, 0, 0, .14),
+        0 1px 8px 0 rgba(0, 0, 0, .12);
+}
+.medium-zoom-image.medium-zoom-image--opened,
+.medium-zoom-overlay {
+    z-index: 10000;
+    filter: none !important
+}
+article.mdui-typo img.mdui-hoverable.medium-zoom-image {
+    transition:
+        transform .3s cubic-bezier(.2, 0, .2, 1),
+        box-shadow .25s cubic-bezier(.4, 0, .2, 1)
+        !important;
 }
 
 /* 其他工具类 */

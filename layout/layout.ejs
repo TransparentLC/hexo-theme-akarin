@@ -73,13 +73,13 @@ keywords = keywords.join(',');
     <% if (is_home() && page.current === 1) { %>
         <%- partial('partials/home-banner.ejs') %>
     <% } else { %>
-        <div style="padding-top:80px"></div>
+        <div style="padding-top:20px"></div>
     <% } %>
 
     <!-- 页面本体 -->
-    <div class="mdui-container" style="max-width:1024px">
+    <main class="mdui-container" style="max-width:1024px">
         <%- body %>
-    </div>
+    </main>
 
     <!-- 页面底部 -->
     <%- partial('partials/footer.ejs') %>

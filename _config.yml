@@ -19,7 +19,7 @@ head:
 
 footer:
     since:
-    text: Hosted by Github Pages
+    text: Hosted by <a href="https://pages.github.com/" target="_blank">Github Pages</a>
 
 uiux:
     slogan: This is a slogan.

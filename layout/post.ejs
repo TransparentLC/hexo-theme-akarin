@@ -1,10 +1,66 @@
-
-<article id="post" class="mdui-typo">
-  <h1><%=page.title%></h1>
-  <%-page.content%>
-</article>
+<div class="mdui-card mdui-shadow-4 akarin-util-rounded-5">
+    <div
+        class="akarin-post-bg akarin-util-bg-cover"
+        <% if (page.thumbnail_color) { %>
+            <% if (isCssColor(page.thumbnail_color)) { %>
+                style="background-color:<%= page.thumbnail_color %>"
+            <% } else { %>
+                style="background-image:url(<%= page.thumbnail_color %>)"
+            <% } %>
+        <% } %>
+        <% if (page.thumbnail) { %>
+            data-src="<%= page.thumbnail %>"
+        <% } %>
+        <% if (page.thumbnail_webp) { %>
+            data-src-webp="<%= page.thumbnail_webp %>"
+        <% } %>
+        <% if (page.thumbnail_avif) { %>
+            data-src-avif="<%= page.thumbnail_avif %>"
+        <% } %>
+    >
+        <div class="akarin-post-title akarin-util-text-gradient">
+            <div class="mdui-card-primary">
+                <div class="mdui-card-primary-title mdui-text-color-white-text">
+                    <%= page.title || '[Untitled Article]' %>
+                </div>
+                <% if (page.categories.data.length > 0) { %>
+                    <div class="mdui-card-primary-subtitle mdui-text-color-white-text akarin-util-opacity-half">
+                        <% page.categories.data.forEach((category, i) => { %>
+                            <a
+                                href="<%= url_for(category.path) %>"
+                                class="mdui-text-color-theme-secondary mdui-text-color-white-text"
+                            ><%= category.name %></a>
+                            <% if (i + 1 < page.categories.data.length) { %>&gt;<% } %>
+                        <% }); %>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <div class="mdui-card-header mdui-valign">
+        <div>
+            <img class="mdui-card-header-avatar akarin-hover-spin" src="<%= theme.uiux.avatar %>">
+            <div class="mdui-card-header-title"><%= config.author %></div>
+            <div class="mdui-card-header-subtitle"><%= date(page.date, 'YYYY-MM-DD HH:mm:ss') %></div>
+        </div>
+        <% if (page.tags.data.length > 0) { %>
+            <div style="flex-grow:1"></div>
+            <div class="mdui-text-right">
+                <% page.tags.data.forEach((tag, i) => { %>
+                    <a
+                        href="<%= url_for(tag.path) %>"
+                        class="mdui-text-color-theme-secondary"
+                    ><%= tag.name %></a>
+                <% }); %>
+            </div>
+        <% } %>
+    </div>
+    <article class="mdui-card-content mdui-typo mdui-p-a-3">
+        <%- page.content %>
+    </article>
+</div>
 
 <!-- Paginator in post.ejs -->
 <div id="paginator">
-  <%-paginator()%>
+    <%-paginator()%>
 </div>

@@ -7,12 +7,12 @@
 
 /**
  * @typedef {Object} LazyLoadConfig
- * @property {Element} [root]
+ * @property {HTMLElement} [root]
  * @property {String} [rootMargin]
  * @property {Number|Number[]} [threshold]
  * @property {String} [loadingSrc]
- * @property {function (Element)} [beforeObserve]
- * @property {function (Element)} [afterObserve]
+ * @property {function(HTMLElement)} [beforeObserve]
+ * @property {function(HTMLElement)} [afterObserve]
  */
 
 class LazyLoad {
@@ -35,31 +35,35 @@ class LazyLoad {
             });
         }, this.config);
         this.image.forEach((/** @type {Element} */ el) => {
-            this.setSrc(el, this.config.loadingSrc);
+            if (this.config.loadingSrc) this.setSrc(el, this.config.loadingSrc);
             this.config.beforeObserve(el);
             this.observer.observe(el);
         });
         (await Promise.all(
             this.imageSupportTest.map(e => new Promise(resolve => {
-                const img = new Image;
-                img.onload = img.onerror = () => resolve((img.width > 0) ? e.mask : 0);
-                img.src = e.img;
+                const testImg = new Image;
+                testImg.onload = testImg.onerror = () => resolve((testImg.width > 0) ? e.mask : 0);
+                testImg.src = e.img;
             }))
         )).forEach(e => this.imageSupport |= e);
     }
     /**
-     * @param {Element} el
+     * @param {HTMLElement} el
      * @param {String} src
      */
     setSrc(el, src) {
-        if (el.tagName.toLowerCase() === 'img') {
-            el.src = src;
-        } else {
-            el.style.backgroundImage = `url(${src})`;
+        const preloadImg = new Image;
+        preloadImg.onload = preloadImg.onerror = () => {
+            if (el.tagName.toLowerCase() === 'img') {
+                el.src = src;
+            } else {
+                el.style.backgroundImage = `url(${src})`;
+            }
         }
+        preloadImg.src = src;
     }
     /**
-     * @param {Element} el
+     * @param {HTMLElement} el
      */
     load(el) {
         let src = '';
@@ -94,13 +98,19 @@ Object.assign(LazyLoad.prototype, {
         root: null,
         rootMargin: '0px',
         threshold: 0,
-        loadingSrc: 'data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=',
+        loadingSrc: null,
         beforeObserve: () => {},
         afterObserve: () => {},
     }),
 })
 
-new LazyLoad(Array.from(document.querySelectorAll('[data-src]')));
+new LazyLoad(Array.from(document.querySelectorAll('[data-src]')), {
+    beforeObserve: el => (el.tagName.toLowerCase() === 'img') ? mediumZoom(el, {
+        margin: 16,
+        scrollOffset: 8,
+        background: 'rgba(0,0,0,.85)',
+    }) : null,
+});
 
 })();
 

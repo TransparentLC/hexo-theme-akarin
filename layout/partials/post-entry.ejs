@@ -1,7 +1,14 @@
 <div class="mdui-card mdui-m-y-5 mdui-hoverable akarin-util-rounded-5">
     <div
         class="akarin-post-entry-bg akarin-util-bg-cover"
-        <% if (post.thumbnail_webp) { %>
+        <% if (post.thumbnail_color) { %>
+            <% if (isCssColor(post.thumbnail_color)) { %>
+                style="background-color:<%= post.thumbnail_color %>"
+            <% } else { %>
+                style="background-image:url(<%= post.thumbnail_color %>)"
+            <% } %>
+        <% } %>
+        <% if (post.thumbnail) { %>
             data-src="<%= post.thumbnail %>"
         <% } %>
         <% if (post.thumbnail_webp) { %>
@@ -16,8 +23,8 @@
                 <div class="mdui-card-primary-title mdui-text-color-white-text">
                     <%= post.title || '[Untitled Article]' %>
                 </div>
-                <div class="mdui-card-primary-subtitle mdui-text-color-white-text akarin-util-opacity-half">
-                    <% if (post.categories.data.length > 0) { %>
+                <% if (post.categories.data.length > 0) { %>
+                    <div class="mdui-card-primary-subtitle mdui-text-color-white-text akarin-util-opacity-half">
                         <% post.categories.data.forEach((category, i) => { %>
                             <a
                                 href="<%= url_for(category.path) %>"
@@ -25,8 +32,8 @@
                             ><%= category.name %></a>
                             <% if (i + 1 < post.categories.data.length) { %>&gt;<% } %>
                         <% }); %>
-                    <% } %>
-                </div>
+                    </div>
+                <% } %>
             </div>
         </div>
     </div>

@@ -132,8 +132,24 @@ document.getElementById('akarin-top').onclick = () => requestAnimationFrame(scro
 // ****************
 (() => {
 
-const darkSwitch = document.getElementById('akarin-dark-mode');
-darkSwitch.onclick = () => document.body.classList.toggle('mdui-theme-layout-dark');
+const dark = document.getElementById('akarin-dark-mode');
+dark.onclick = () => {
+    let set;
+    if (localStorage.getItem('dark') === 'enable') {
+        set = 'disable';
+        mdui.snackbar('保持禁用深色模式，双击即可恢复为自动切换', { timeout: 2000 });
+    } else {
+        set = 'enable';
+        mdui.snackbar('保持启用深色模式，双击即可恢复为自动切换', { timeout: 2000 });
+    }
+    localStorage.setItem('dark', set);
+    switchDark();
+};
+dark.ondblclick = () => {
+    localStorage.setItem('dark', 'auto');
+    mdui.snackbar('已设置为根据系统主题自动切换深色模式', { timeout: 2000 });
+    switchDark();
+};
 
 })();
 

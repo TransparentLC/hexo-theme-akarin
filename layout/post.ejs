@@ -60,16 +60,16 @@
 
         <% const license = page.hide_license ? '' : (page.license || theme.posts.license); %>
         <% if (license) { %>
-            <blockquote class="mdui-m-x-0 mdui-p-y-1" style="border-left:4px solid rgba(0,0,0,.36)">
+            <blockquote class="mdui-m-x-0 mdui-p-y-1 mdui-m-b-0" style="border-left:4px solid rgba(0,0,0,.36)">
                 <strong><%- license %></strong>
                 <br>
                 <strong>本文链接：<a href="<%= page.permalink %>"><%= page.permalink %></a></strong>
             </blockquote>
         <% } %>
+
+        <%- partial('partials/comment-area') %>
     </article>
 </div>
 
 <!-- Paginator in post.ejs -->
-<div id="paginator">
-    <%-paginator()%>
-</div>
+<%- partial('partials/paginator') %>

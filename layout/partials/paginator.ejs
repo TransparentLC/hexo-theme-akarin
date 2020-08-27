@@ -1,6 +1,6 @@
 <div class="mdui-valign mdui-m-t-2">
     <% if (page.prev) { %>
-        <a href="<%= url_for(page.prev_link) %>" class="mdui-btn mdui-btn-icon mdui-ripple">
+        <a href="<%= url_for(is_post() ? page.prev.path : page.prev_link) %>" class="mdui-btn mdui-btn-icon mdui-ripple">
             <i class="mdui-icon material-icons">chevron_left</i>
         </a>
     <% } else { %>
@@ -8,11 +8,22 @@
             <i class="mdui-icon material-icons">chevron_left</i>
         </button>
     <% } %>
+    <% if (is_post() && page.prev) { %>
+        <span class="mdui-typo-body-1-opacity mdui-m-l-1 mdui-text-left" title="<%- page.prev.title %>">上一篇</span>
+    <% } %>
 
-    <div class="mdui-text-center" style="flex-grow:1"><%= page.current %> / <%= page.total %></div>
+    <span class="mdui-typo-body-1-opacity mdui-text-center" style="flex-grow:1">
+        <% if (!is_post()) { %>
+            <%= page.current %> / <%= page.total %>
+        <% } %>
+    </span>
+
+    <% if (is_post() && page.next) { %>
+        <span class="mdui-typo-body-1-opacity mdui-m-r-1 mdui-text-right" title="<%- page.next.title %>">下一篇</span>
+    <% } %>
 
     <% if (page.next) { %>
-        <a href="<%= url_for(page.next_link) %>" class="mdui-btn mdui-btn-icon mdui-ripple">
+        <a href="<%= url_for(is_post() ? page.next.path : page.next_link) %>" class="mdui-btn mdui-btn-icon mdui-ripple">
             <i class="mdui-icon material-icons">chevron_right</i>
         </a>
     <% } else { %>

@@ -155,4 +155,46 @@ if (currentDark) currentDark.classList.add('mdui-list-item-active');
 
 })();
 
+// ****************
+// 对文章进行处理
+// ****************
+(() => {
+
+const article = document.querySelector('article');
+if (!article) return;
+
+// 在视频上添加class
+Array.from(article.querySelectorAll('video,.video-container')).forEach(e => {
+    e.classList.add(`mdui-video-${e.tagName.toLowerCase() === 'video' ? 'fluid' : 'container'}`);
+    e.classList.add('mdui-img-rounded');
+    e.classList.add('mdui-center');
+    e.classList.add('mdui-hoverable');
+});
+
+// “复制代码”按钮
+const copyButton = document.createElement('button');
+copyButton.innerHTML = '<i class="mdui-icon material-icons">content_copy</i>';
+copyButton.classList.add('mdui-btn');
+copyButton.classList.add('mdui-btn-icon');
+copyButton.classList.add('mdui-btn-dense');
+copyButton.classList.add('mdui-ripple');
+copyButton.classList.add('mdui-float-right');
+const copyCode = code => {
+    const range = document.createRange();
+    range.selectNodeContents(code);
+    const selection = document.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+    document.execCommand('Copy');
+    selection.removeAllRanges();
+    mdui.snackbar('代码已复制', { timeout: 2000 });
+};
+Array.from(article.querySelectorAll('pre[class^="language-"],pre[class*=" language-"]')).forEach(e => {
+    const btn = copyButton.cloneNode(true);
+    btn.onclick = () => copyCode(e.querySelector('code'));
+    e.insertAdjacentElement('afterbegin', btn);
+});
+
+})();
+
 })(document)

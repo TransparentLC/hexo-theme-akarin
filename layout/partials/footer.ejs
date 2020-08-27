@@ -1,0 +1,17 @@
+<div class="mdui-container mdui-typo mdui-m-y-5" style="display:flex;max-width:1024px">
+    <div class="mdui-text-left mdui-typo-body-1-opacity">
+        <% if (theme.footer.since !== null && theme.footer.since.toString() !== date(Date.now(), 'YYYY')) { %>
+            Copyright © <%= theme.footer.since %> - <%= date(Date.now(), 'YYYY') %> <%= config.author %>
+        <% } else { %>
+            Copyright © <%= date(Date.now(), 'YYYY') %> <%= config.author %>
+        <% } %>
+        <br>
+        <%- theme.footer.text %>
+    </div>
+    <div style="flex-grow:1"></div>
+    <div class="mdui-text-right mdui-typo-body-1-opacity">
+        Powered by <a href="https://hexo.io" target="_blank">Hexo</a> <span class="mdui-hidden-xs-down"><%= env.version %></span>
+        <br>
+        Theme - Akarin
+    </div>
+</div>

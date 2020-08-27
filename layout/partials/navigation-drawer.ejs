@@ -1,0 +1,44 @@
+<!-- 打开抽屉菜单的按钮 -->
+<button
+    class="mdui-fab mdui-text-color-grey-700 mdui-shadow-0 mdui-m-a-2"
+    style="position:fixed;z-index:1"
+    mdui-drawer="{target:'#akarin-drawer'}"
+><i class="mdui-icon material-icons">menu</i></button>
+
+<!-- 左边的抽屉菜单 -->
+<div id="akarin-drawer" class="mdui-drawer mdui-drawer-full-height mdui-shadow-6">
+    <div id="akarin-drawer-media" class="mdui-p-x-2 akarin-util-bg-cover">
+        <img
+            id="akarin-drawer-avatar"
+            class="mdui-m-t-4 mdui-img-circle akarin-hover-spin"
+            src="<%= theme.uiux.avatar %>"
+        >
+        <div class="mdui-card-media-covered akarin-util-text-gradient">
+            <div class="mdui-card-primary">
+                <div class="mdui-typo-subheading"><%= config.author %> </div>
+                <div class="mdui-typo-caption akarin-util-opacity-half"><%= theme.drawer.caption || config.title %> </div>
+            </div>
+        </div>
+    </div>
+    <ul class="mdui-list">
+        <% Object.keys(theme.drawer.menu).forEach(key => { %>
+            <li>
+                <a class="mdui-list-item mdui-ripple" href="<%= theme.drawer.menu[key].href %>">
+                    <% if (theme.drawer.menu[key].icon) { %>
+                        <i class="mdui-list-item-icon mdui-icon material-icons"><%= theme.drawer.menu[key].icon %></i>
+                    <% } else { %>
+                        <i class="mdui-list-item-icon"></i>
+                    <% } %>
+                    <span class="mdui-list-item-content"><%= key %></span>
+                </a>
+            </li>
+            <% if (theme.drawer.menu[key].divider) { %>
+                <li class="mdui-divider"></li>
+            <% } %>
+        <% }); %>
+        <li id="akarin-dark-mode" class="mdui-list-item mdui-ripple">
+            <i class="mdui-list-item-icon mdui-icon material-icons">brightness_4</i>
+            <span class="mdui-list-item-content">深色模式</span>
+        </li>
+    </ul>
+</div>

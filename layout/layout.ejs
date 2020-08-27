@@ -1,0 +1,74 @@
+<%
+let pageTitle = page.title || config.subtitle || '';
+if (is_archive()) pageTitle = '归档';
+if (is_tag()) pageTitle = `标签：${page.tag}`;
+if (is_category()) pageTitle = `分类：${page.category}`;
+if (is_month()) pageTitle += `(${page.year}-${page.month})`;
+if (is_year()) pageTitle += `(${page.year})`;
+pageTitle += (pageTitle ? ' | ' : '') + config.title;
+
+let keywords = (page.tags || []).map(e => e.name);
+if (theme.head.keywords) keywords.unshift(theme.head.keywords);
+keywords = keywords.join(',');
+%>
+
+<!DOCTYPE html>
+<html lang="<%=config.language%>">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,shrink-to-fit=no">
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta name="author" content="<%= config.author %>">
+    <meta name="keywords" content="<%= keywords %>">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="icon shortcut" type="image/ico" href="<%= url_for(theme.head.favicon) %>">
+    <link rel="icon" href="<%= url_for(theme.head.high_res_favicon) %>">
+    <link rel="apple-touch-icon" href="<%= url_for(theme.head.apple_touch_icon) %>">
+    <title><%= pageTitle %></title>
+
+    <script>
+        /MSIE|Trident/.test(navigator.userAgent) && alert('IE用户给我爬！');
+        matchMedia('(prefers-color-scheme:dark)').addListener(e => document.body.classList[\e.matches ? 'add' : 'remove']('mdui-theme-layout-dark'));
+    </script>
+
+    <!-- 导入CSS -->
+    <% if (theme.stylesheets !== undefined && theme.stylesheets.length > 0) { %>
+        <% theme.stylesheets.forEach(url => { %>
+            <%- css(url) %>
+        <% }); %>
+    <% } %>
+
+    <!-- 添加CSS变量 -->
+    <%- partial('partials/css-variables') %>
+</head>
+<body class="mdui-theme-primary-<%= theme.uiux.mdui_primary_color %> mdui-theme-accent-<%= theme.uiux.mdui_accent_color %> mdui-drawer-body-left">
+    <!-- 抽屉菜单 -->
+    <%- partial('partials/navigation-drawer') %>
+
+    <!-- 右下角的返回顶部 -->
+    <%- partial('partials/top.ejs') %>
+
+    <!-- 主页大图 -->
+    <% if (is_home() && page.current === 1) { %>
+        <%- partial('partials/home-banner.ejs') %>
+    <% } else { %>
+        <div style="padding-top:80px"></div>
+    <% } %>
+
+    <!-- 页面本体 -->
+    <div class="mdui-container" style="max-width:1024px">
+        <%- body %>
+    </div>
+
+    <!-- 页面底部 -->
+    <%- partial('partials/footer.ejs') %>
+
+    <!-- 导入JS -->
+    <% if (theme.scripts !== undefined && theme.scripts.length > 0) { %>
+        <% theme.scripts.forEach(url => { %>
+            <%- js(url) %>
+        <% }); %>
+    <% } %>
+</body>
+</html>

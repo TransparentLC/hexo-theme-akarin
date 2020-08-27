@@ -1,0 +1,23 @@
+<div class="mdui-valign mdui-m-t-2">
+    <% if (page.prev) { %>
+        <a href="<%= url_for(page.prev_link) %>" class="mdui-btn mdui-btn-icon mdui-ripple">
+            <i class="mdui-icon material-icons">chevron_left</i>
+        </a>
+    <% } else { %>
+        <button class="mdui-btn mdui-btn-icon mdui-ripple" disabled>
+            <i class="mdui-icon material-icons">chevron_left</i>
+        </button>
+    <% } %>
+
+    <div class="mdui-text-center" style="flex-grow:1"><%= page.current %> / <%= page.total %></div>
+
+    <% if (page.next) { %>
+        <a href="<%= url_for(page.next_link) %>" class="mdui-btn mdui-btn-icon mdui-ripple">
+            <i class="mdui-icon material-icons">chevron_right</i>
+        </a>
+    <% } else { %>
+        <button class="mdui-btn mdui-btn-icon mdui-ripple" disabled>
+            <i class="mdui-icon material-icons">chevron_right</i>
+        </button>
+    <% } %>
+</div>

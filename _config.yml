@@ -1,0 +1,49 @@
+drawer:
+    caption:
+    menu:
+        主页:
+            href: /
+            icon: home
+        归档:
+            href: /archives
+            divider: true
+        关于:
+            href: /about
+            icon: person
+
+head:
+    favicon: /img/favicon.png
+    high_res_favicon: /img/favicon.png
+    apple_touch_icon: /img/favicon.png
+    keywords:
+
+footer:
+    since:
+    text: Hosted by Github Pages
+
+uiux:
+    slogan: This is a slogan.
+    sidebar_image: https://picsum.photos/600/400.webp?blur=10
+    sidebar_image_color: '#e16b8c'
+    banner_image: https://picsum.photos/1200/500.webp
+    banner_image_color: '#e16b8c'
+    avatar: https://picsum.photos/200/200.webp
+    mdui_primary_color: pink
+    mdui_accent_color: pink
+    post_thumbnail_color: '#03a9f4'
+
+post_entry:
+    excerpt: 120
+
+# stylesheets loaded in the <head>
+stylesheets:
+- /css/mdui.min.css
+- /css/prism-line-numbers.min.css
+- /css/prism-vsc-dark-plus.min.css
+- /css/style.css
+
+# scripts loaded in the end of the body
+scripts:
+- /js/mdui.min.js
+- /js/medium-zoom.min.js
+- /js/script.js

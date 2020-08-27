@@ -1,0 +1,113 @@
+/* 抽屉菜单 */
+#akarin-drawer-media {
+    position: relative;
+    height: 150px;
+    background-color: var(--sidebar-image-color);
+    background-image: var(--sidebar-image);
+}
+#akarin-drawer-avatar {
+    width: 54px;
+    height: 54px;
+}
+
+/* 主页大图 */
+#akarin-home-banner-wrapper {
+    padding-top: 150px;
+    padding-bottom: 200px;
+    margin-bottom: -150px;
+    background-color: var(--banner-image-color);
+    background-image: var(--banner-image);
+}
+@media (min-width:600px) {
+    #akarin-home-banner-wrapper {
+        padding-top: 200px;
+        padding-bottom: 300px;
+        margin-bottom: -150px;
+    }
+}
+#akarin-home-banner {
+    max-width: 800px;
+    display: inline-block;
+    background-color: rgba(0, 0, 0, .3);
+}
+
+/* 返回顶部 */
+#akarin-top img,
+#akarin-top source {
+    position: fixed;
+    cursor: pointer;
+    width: auto;
+    height: 180px;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    transition: transform ease-out .25s;
+    transform: translateX(70%);
+}
+#akarin-top img:hover,
+#akarin-top source:hover {
+    transform: translateX(0);
+}
+
+/* hover头像时的旋转效果 */
+.akarin-hover-spin {
+    transition: transform .4s ease;
+}
+.akarin-hover-spin:hover {
+    transform: rotate(360deg);
+}
+
+/* 文章Entry */
+.akarin-post-entry-bg {
+    min-height: 180px;
+    position: relative;
+    background-color: var(--post-thumbnail-color);
+}
+@media (min-width:600px) {
+    .akarin-post-entry-bg {
+        min-height: 210px;
+    }
+}
+@media (min-width:1024px) {
+    .akarin-post-entry-bg {
+        min-height: 240px;
+    }
+}
+.akarin-post-entry-title {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+/* 文章内容 */
+.mdui-typo pre {
+    font-size: 1em;
+}
+.mdui-typo pre,
+.mdui-typo pre code {
+    line-height: 1.25;
+}
+
+/* 其他工具类 */
+.akarin-util-bg-cover {
+    background-position: center;
+    background-size: cover;
+}
+.akarin-util-opacity-half {
+    opacity: .5;
+}
+.akarin-util-opacity-quarter {
+    opacity: .75;
+}
+.akarin-util-text-gradient {
+    background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .35), rgba(0, 0, 0, .5))
+}
+.akarin-util-rounded-5 {
+    border-radius: 5px;
+}
+.akarin-util-rounded-7 {
+    border-radius: 7px;
+}
+.akarin-util-rounded-9 {
+    border-radius: 9px;
+}

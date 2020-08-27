@@ -142,24 +142,16 @@ document.getElementById('akarin-top').onclick = () => requestAnimationFrame(scro
 // ****************
 (() => {
 
-const dark = document.getElementById('akarin-dark-mode');
-dark.onclick = () => {
-    let set;
-    if (localStorage.getItem('dark') === 'enable') {
-        set = 'disable';
-        mdui.snackbar('保持禁用深色模式，双击即可恢复为自动切换', { timeout: 2000 });
-    } else {
-        set = 'enable';
-        mdui.snackbar('保持启用深色模式，双击即可恢复为自动切换', { timeout: 2000 });
-    }
-    localStorage.setItem('dark', set);
-    switchDark();
-};
-dark.ondblclick = () => {
-    localStorage.setItem('dark', 'auto');
-    mdui.snackbar('已设置为根据系统主题自动切换深色模式', { timeout: 2000 });
-    switchDark();
-};
+const dark = Array.from(document.querySelectorAll('[data-dark]'));
+dark.forEach((e, i) => {
+    e.addEventListener('click', () => {
+        dark.forEach((t, j) => t.classList[(i === j) ? 'add' : 'remove']('mdui-list-item-active'));
+        switchDark(e.getAttribute('data-dark'));
+    });
+});
+const currentMode = localStorage.getItem('dark');
+const currentDark = dark.find(e => e.getAttribute('data-dark') === currentMode);
+if (currentDark) currentDark.classList.add('mdui-list-item-active');
 
 })();
 

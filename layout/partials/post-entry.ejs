@@ -38,7 +38,7 @@
         </div>
     </div>
     <div class="mdui-card-content mdui-typo">
-        <%= truncate(strip_html(post.content), { length: post.excerpt || theme.post_entry.excerpt }) %>
+        <%= strip_html(post.excerpt) || truncate(strip_html(post.content), { length: theme.posts.default_excerpt }) %>
         <a href="<%= url_for(post.path) %>">阅读全文</a>
     </div>
     <div class="mdui-divider"></div>

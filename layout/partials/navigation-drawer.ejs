@@ -20,9 +20,9 @@
             </div>
         </div>
     </div>
-    <ul class="mdui-list">
+    <div class="mdui-list" mdui-collapse>
         <% Object.keys(theme.drawer.menu).forEach(key => { %>
-            <li>
+            <div>
                 <a class="mdui-list-item mdui-ripple" href="<%= theme.drawer.menu[key].href %>">
                     <% if (theme.drawer.menu[key].icon) { %>
                         <i class="mdui-list-item-icon mdui-icon material-icons"><%= theme.drawer.menu[key].icon %></i>
@@ -31,14 +31,22 @@
                     <% } %>
                     <span class="mdui-list-item-content"><%= key %></span>
                 </a>
-            </li>
+            </div>
             <% if (theme.drawer.menu[key].divider) { %>
-                <li class="mdui-divider"></li>
+                <div class="mdui-divider"></div>
             <% } %>
         <% }); %>
-        <li id="akarin-dark-mode" class="mdui-list-item mdui-ripple">
-            <i class="mdui-list-item-icon mdui-icon material-icons">brightness_4</i>
-            <span class="mdui-list-item-content">深色模式</span>
-        </li>
-    </ul>
+        <div class="mdui-collapse-item mdui-collapse-item-open">
+            <div class="mdui-list-item mdui-ripple mdui-collapse-item-header">
+                <i class="mdui-list-item-icon mdui-icon material-icons">brightness_4</i>
+                <span class="mdui-list-item-content">深色模式</span>
+                <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+            </div>
+            <div class="mdui-list mdui-collapse-item-body">
+                <div class="mdui-list-item mdui-ripple" data-dark="auto">根据系统主题切换</div>
+                <div class="mdui-list-item mdui-ripple" data-dark="enable">启用</div>
+                <div class="mdui-list-item mdui-ripple" data-dark="disable">禁用</div>
+            </div>
+        </div>
+    </div>
 </nav>

@@ -57,6 +57,15 @@
     </div>
     <article class="mdui-card-content mdui-typo mdui-p-a-3">
         <%- page.content %>
+
+        <% const license = page.hide_license ? '' : (page.license || theme.posts.license); %>
+        <% if (license) { %>
+            <blockquote class="mdui-m-x-0 mdui-p-y-1" style="border-left:4px solid rgba(0,0,0,.36)">
+                <strong><%- license %></strong>
+                <br>
+                <strong>本文链接：<a href="<%= page.permalink %>"><%= page.permalink %></a></strong>
+            </blockquote>
+        <% } %>
     </article>
 </div>
 

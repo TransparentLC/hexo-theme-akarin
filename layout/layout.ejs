@@ -31,25 +31,20 @@ keywords = keywords.join(',');
         /MSIE|Trident/.test(navigator.userAgent) && (alert('IE用户给我爬！') || (location.href = 'about:blank'));
     </script>
     <script>
-        const switchDark = (e = {}) => {
-            const classList = document.body.classList;
-            const className = 'mdui-theme-layout-dark';
-            switch (localStorage.getItem('dark')) {
-                case 'enable':
-                    classList.add(className);
-                    break;
-                case 'disable':
-                    classList.remove(className);
-                    break;
-                default:
-                    localStorage.setItem('dark', 'auto');
-                case 'auto':
-                    classList[e.matches ? 'add' : 'remove'](className);
-                    break;
+        const switchDark = mode => {
+            const className = {
+                'auto': 'mdui-theme-layout-auto',
+                'enable': 'mdui-theme-layout-dark',
+                'disable': '',
+            };
+            mode = mode || localStorage.getItem('dark');
+            if (!(mode in className)) mode = 'auto';
+            for (const m in className) {
+                if (className[m]) document.body.classList[(m === mode) ? 'add' : 'remove'](className[m]);
             }
+            localStorage.setItem('dark', mode);
         }
         addEventListener('DOMContentLoaded', () => switchDark());
-        matchMedia('(prefers-color-scheme:dark)').addListener(switchDark);
     </script>
 
     <!-- 导入CSS -->

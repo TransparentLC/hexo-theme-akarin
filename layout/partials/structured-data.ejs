@@ -1,0 +1,52 @@
+<% if((page.current === 1) && is_home()) { %>
+    <script type="application/ld+json"><%-
+        JSON.stringify({
+            '@context': 'http://schema.org',
+            '@type': 'Website',
+            publisher: {
+                '@type': 'Organization',
+                name: config.title,
+                logo: theme.head.high_res_favicon,
+            },
+            url: config.url,
+            image: {
+                '@type': 'WebPage',
+                url: theme.head.apple_touch_icon,
+            },
+            mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': config.url,
+            },
+            description: config.description,
+        })
+    %></script>
+<% } %>
+
+<% if (is_post()) { %>
+    <script type="application/ld+json"><%-
+        JSON.stringify({
+            '@context': 'http://schema.org',
+            '@type': 'BlogPosting',
+            mainEntityOfPage: config.url + url_for(path),
+            headline: page.title,
+            datePublished: page.date,
+            dateModified: page.updated,
+            author: {
+                "@type": 'Person',
+                name: config.author,
+                image: {
+                    '@type': 'ImageObject',
+                    'url': theme.uiux.avatar,
+                },
+                description: theme.uiux.slogan,
+            },
+            publisher: {
+                '@type': 'Organization',
+                name: config.title,
+                logo: theme.head.high_res_favicon,
+            },
+            keywords: (theme.head.keywords ? [theme.head.keywords] : []).concat(page.tags ? page.tags.data.map(e => e.name) : []).join(','),
+            description: page.description || strip_html(page.excerpt) || config.description,
+        })
+    %></script>
+<% } %>

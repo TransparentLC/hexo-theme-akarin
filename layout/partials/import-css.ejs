@@ -1,0 +1,16 @@
+<% if (theme.stylesheets) { %>
+    <% theme.stylesheets.forEach(url => { %>
+        <%- css(url) %>
+    <% }); %>
+<% } %>
+
+<style>
+    * {
+        --sidebar-image: url(<%= theme.uiux.sidebar_image %>);
+        --sidebar-image-color: <%=theme.uiux.sidebar_image_color %>;
+        --banner-image: url(<%= theme.uiux.banner_image %>);
+        --banner-image-color: <%=theme.uiux.banner_image_color %>;
+        --post-thumbnail-color: <%=theme.uiux.post_thumbnail_color %>;
+        --copy-code-btn-color: <%=theme.uiux.copy_code_button_color %>;
+    }
+</style>

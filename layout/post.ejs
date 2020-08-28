@@ -74,4 +74,6 @@
 </div>
 
 <!-- Paginator in post.ejs -->
-<%- partial('partials/paginator') %>
+<% if (!is_page()) { %>
+    <%- partial('partials/paginator') %>
+<% } %>

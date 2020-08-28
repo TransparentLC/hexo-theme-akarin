@@ -4,18 +4,31 @@ drawer:
         主页:
             href: /
             icon: home
-        友链:
-            href: /friend
-            icon: link
         关于:
             href: /about
             icon: person
+        友链:
+            href: /friend
+            icon: link
+        归档:
+            preset: archive
+        RSS:
+            preset: rss
+            divider: true
+        深色模式:
+            preset: dark
+        访问统计:
+            preset: stats_busuanzi
 
 head:
     favicon: /img/favicon.png
     high_res_favicon: /img/favicon.png
     apple_touch_icon: /img/favicon.png
     keywords:
+    structured_data: true
+    site_verification:
+        google:
+        baidu:
 
 footer:
     since:
@@ -40,36 +53,40 @@ uiux:
 posts:
     default_excerpt: 120
     license: 本作品采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。
-    comment:
-        livere:
-            enable: false
-            uid:
 
-busuanzi:
-    enable: false
-    script: https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.js
-    site_uv: true
-    site_pv: true
-    page_pv: true
+links:
+    default_avatar: /img/Transparent_Akkarin.png
+    description:
+    list:
+        Github:
+            link: https://github.com/
+            avatar: https://github.githubassets.com/images/modules/open_graph/github-logo.png
+            description: 全球最大同性交友网站
 
-# stylesheets loaded in the <head>
+comment:
+    livere:
+        enable: false
+        uid:
+
+stats:
+    busuanzi:
+        enable: false
+        script: https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.js
+        site_uv: true
+        site_pv: true
+        page_pv: true
+
+mathjax:
+
+rss:
+
 stylesheets:
 - /css/mdui.min.css
 - /css/prism-line-numbers.min.css
 - /css/prism-vsc-dark-plus.min.css
 - /css/style.css
 
-# scripts loaded in the end of the body
 scripts:
 - /js/mdui.min.js
 - /js/medium-zoom.min.js
 - /js/script.js
-
-links:
-    default_avatar: /img/Transparent_Akkarin.png
-    description:
-    list:
-        "Github":
-            link: https://github.com/
-            avatar: https://github.githubassets.com/images/modules/open_graph/github-logo.png
-            description: 全球最大同性交友网站

@@ -21,9 +21,9 @@
         <div class="akarin-post-title akarin-util-text-gradient">
             <div class="mdui-card-primary">
                 <div class="mdui-card-primary-title mdui-text-color-white-text">
-                    <%= page.title || '[Untitled Article]' %>
+                    <%= page.title || '[Untitled]' %>
                 </div>
-                <% if (page.categories.data.length > 0) { %>
+                <% if (page.categories && page.categories.data.length > 0) { %>
                     <div class="mdui-card-primary-subtitle mdui-text-color-white-text akarin-util-opacity-half">
                         <% page.categories.data.forEach((category, i) => { %>
                             <a
@@ -43,7 +43,7 @@
             <div class="mdui-card-header-title"><%= config.author %></div>
             <div class="mdui-card-header-subtitle"><%= date(page.date, 'YYYY-MM-DD HH:mm:ss') %></div>
         </div>
-        <% if (page.tags.data.length > 0) { %>
+        <% if (page.tags && page.tags.data.length > 0) { %>
             <div style="flex-grow:1"></div>
             <div class="mdui-text-right">
                 <% page.tags.data.forEach((tag, i) => { %>
@@ -62,6 +62,8 @@
         <% if (license) { %>
             <blockquote class="mdui-m-x-0 mdui-p-y-1 mdui-m-b-0" style="border-left:4px solid rgba(0,0,0,.36)">
                 <strong><%- license %></strong>
+                <br>
+                <strong>本文作者：<%= config.author %></strong>
                 <br>
                 <strong>本文链接：<a href="<%= page.permalink %>"><%= page.permalink %></a></strong>
             </blockquote>

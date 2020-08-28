@@ -4,6 +4,9 @@ drawer:
         主页:
             href: /
             icon: home
+        友链:
+            href: /friend
+            icon: link
         关于:
             href: /about
             icon: person
@@ -61,3 +64,12 @@ scripts:
 - /js/mdui.min.js
 - /js/medium-zoom.min.js
 - /js/script.js
+
+links:
+    default_avatar: /img/Transparent_Akkarin.png
+    description:
+    list:
+        "Github":
+            link: https://github.com/
+            avatar: https://github.githubassets.com/images/modules/open_graph/github-logo.png
+            description: 全球最大同性交友网站

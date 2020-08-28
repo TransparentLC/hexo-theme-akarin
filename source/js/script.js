@@ -122,23 +122,25 @@ new LazyLoad(Array.from(document.querySelectorAll('[data-src]')), {
 const top = document.getElementById('akarin-top');
 if (!top) return;
 
+const body = document.body;
+const documentElement = document.documentElement;
+
 const scroll = () => {
-    const bodyScrollTop = document.body.scrollTop;
-    const documentScrollTop = document.documentElement.scrollTop;
-    const top = bodyScrollTop + documentScrollTop;
-    const speed = top / 4;
+    const bodyScrollTop = body.scrollTop;
+    const documentScrollTop = documentElement.scrollTop;
+    const topOffset = bodyScrollTop + documentScrollTop;
+    const speed = topOffset / 4;
     if (bodyScrollTop != 0) {
-        document.body.scrollTop -= speed;
+        body.scrollTop -= speed;
     } else {
-        document.documentElement.scrollTop -= speed;
+        documentElement.scrollTop -= speed;
     }
-    if (top) requestAnimationFrame(scroll);
+    if (topOffset) requestAnimationFrame(scroll);
 };
 
 top.onclick = () => requestAnimationFrame(scroll);
 
 if (top.tagName.toLowerCase() === 'button') {
-    const documentElement = document.documentElement;
     const showFab = () => top.classList[
         (2 * documentElement.scrollTop < documentElement.clientHeight) ? 'add' : 'remove'
     ]('mdui-fab-hide');

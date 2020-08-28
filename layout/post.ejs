@@ -60,14 +60,12 @@
 
         <% const license = page.hide_license ? '' : (page.license || theme.posts.license); %>
         <% if (license) { %>
-            <% let permalink = page.permalink; %>
-            <% if (permalink.endsWith('index.html')) permalink = permalink.substring(0, permalink.length - 'index.html'.length); %>
             <blockquote class="mdui-m-x-0 mdui-p-y-1 mdui-m-b-0" style="border-left:4px solid rgba(0,0,0,.36)">
                 <strong><%- license %></strong>
                 <br>
                 <strong>本文作者：<%= config.author %></strong>
                 <br>
-                <strong>本文链接：<a href="<%= permalink %>"><%= permalink %></a></strong>
+                <strong>本文链接：<a href="<%= removeIndex(page.permalink) %>"><%= removeIndex(page.permalink) %></a></strong>
             </blockquote>
         <% } %>
 

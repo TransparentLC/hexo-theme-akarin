@@ -1,5 +1,21 @@
 ((document) => {
 
+console.log(
+    '%c Project %c hexo-theme-akarin ',
+    'color:#fff;background-color:#555;border-radius:3px 0 0 3px',
+    'color:#fff;background-color:#07c;border-radius:0 3px 3px 0'
+);
+console.log(
+    '%c Author %c TransparentLC ',
+    'color:#fff;background-color:#555;border-radius:3px 0 0 3px',
+    'color:#fff;background-color:#e54;border-radius:0 3px 3px 0'
+);
+console.log(
+    '%c Source %c https://github.com/TransparentLC/hexo-theme-akarin ',
+    'color:#fff;background-color:#555;border-radius:3px 0 0 3px',
+    'color:#fff;background-color:#9c1;border-radius:0 3px 3px 0'
+);
+
 // ****************
 // 懒加载组件
 // ****************

@@ -90,7 +90,7 @@
                 <% } %>
             <% } else { %>
                 <div>
-                    <a class="mdui-list-item mdui-ripple" href="<%= url_for(theme.drawer.menu[key].href) %>">
+                    <a class="mdui-list-item mdui-ripple" href="<%= removeIndex(url_for(theme.drawer.menu[key].href)) %>">
                         <% if (theme.drawer.menu[key].icon) { %>
                             <i class="mdui-list-item-icon mdui-icon material-icons"><%= theme.drawer.menu[key].icon %></i>
                         <% } else { %>

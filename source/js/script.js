@@ -37,31 +37,34 @@ class LazyLoad {
      * @param {LazyLoadConfig} config
      */
     constructor(image, config) {
-        /** @type {IntersectionObserver} */
-        this.observer = null;
-        this.image = image;
         this.config = Object.assign({}, this.defaults, config);
         this.imageSupport = 0;
-        this.init();
-    }
-    async init() {
         this.observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) this.load(entry.target);
             });
         }, this.config);
-        this.image.forEach((/** @type {Element} */ el) => {
-            if (this.config.loadingSrc) this.setSrc(el, this.config.loadingSrc);
-            this.config.beforeObserve(el);
-            this.observer.observe(el);
-        });
-        (await Promise.all(
+        Promise.all(
             this.imageSupportTest.map(e => new Promise(resolve => {
                 const testImg = new Image;
                 testImg.onload = testImg.onerror = () => resolve((testImg.width > 0) ? e.mask : 0);
                 testImg.src = e.img;
             }))
-        )).forEach(e => this.imageSupport |= e);
+        ).then(result => {
+            result.forEach(e => this.imageSupport |= e);
+            // console.log(
+            //     'Image support:',
+            //     this.imageSupportTest
+            //         .map(e => this.imageSupport & e.mask ? e.type : '')
+            //         .filter(e => e)
+            //         .join(', ')
+            // );
+            image.forEach((/** @type {HTMLElement} */ el) => {
+                if (this.config.loadingSrc) this.setSrc(el, this.config.loadingSrc);
+                this.config.beforeObserve(el);
+                this.observer.observe(el);
+            });
+        });
     }
     /**
      * @param {HTMLElement} el

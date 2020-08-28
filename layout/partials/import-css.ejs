@@ -1,6 +1,6 @@
 <% if (theme.stylesheets) { %>
     <% theme.stylesheets.forEach(url => { %>
-        <%- css(url) %>
+        <%- (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('//')) ? `<link href="${url}" rel="stylesheet">` : css(url) %>
     <% }); %>
 <% } %>
 

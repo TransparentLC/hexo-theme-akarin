@@ -71,7 +71,7 @@ comment:
 stats:
     busuanzi:
         enable: false
-        script: https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.js
+        script: https://cdn.jsdelivr.net/npm/busuanzi
         site_uv: true
         site_pv: true
         page_pv: true

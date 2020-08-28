@@ -49,24 +49,9 @@ keywords = keywords.join(',');
     <% } %>
 
     <script>
-        /MSIE|Trident/.test(navigator.userAgent) && (alert('IE用户给我爬！') || (location.href = 'about:blank'));
+        /MSIE|Trident/.test(navigator.userAgent) && (location.href = '<%= url_for('/upgrade-browser.html') %>');
     </script>
-    <script>
-        const switchDark = mode => {
-            const className = {
-                'auto': 'mdui-theme-layout-auto',
-                'enable': 'mdui-theme-layout-dark',
-                'disable': '',
-            };
-            mode = mode || localStorage.getItem('dark');
-            if (!(mode in className)) mode = 'auto';
-            for (const m in className) {
-                if (className[m]) document.body.classList[(m === mode) ? 'add' : 'remove'](className[m]);
-            }
-            localStorage.setItem('dark', mode);
-        }
-        addEventListener('DOMContentLoaded', () => switchDark());
-    </script>
+    <script>addEventListener("DOMContentLoaded",()=>(t=>{const e={auto:"mdui-theme-layout-auto",enable:"mdui-theme-layout-dark",disable:""};(t=t||localStorage.getItem("dark"))in e||(t="auto");for(const o in e)e[o]&&document.body.classList[o===t?"add":"remove"](e[o]);localStorage.setItem("dark",t)})())</script>
 
     <!-- 导入CSS -->
     <%- partial('partials/import-css.ejs') %>

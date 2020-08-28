@@ -217,6 +217,17 @@ Array.from(article.querySelectorAll('pre[class^="language-"],pre[class*=" langua
     e.insertAdjacentElement('afterbegin', btn);
 });
 
+// 在img上添加一些class
+Array.from(document.querySelectorAll('article > img')).forEach(e => {
+    e.classList.add(
+        'mdui-img-fluid',
+        'mdui-img-rounded',
+        'mdui-center',
+        'mdui-hoverable',
+        'mdui-m-y-3'
+    );
+});
+
 })();
 
 })(document)

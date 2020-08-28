@@ -5,12 +5,7 @@
 <% } %>
 
 <% if (theme.stats.busuanzi.enable) { %>
-    <%-
-        js({
-            src: theme.stats.busuanzi.script || 'https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js',
-            async: true,
-        })
-    %>
+    <script src="<%= theme.stats.busuanzi.script || 'https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js' %>" async></script>
 <% } %>
 
 <% if ((is_post() || is_page()) && page.mathjax) { %>
@@ -26,10 +21,5 @@
             },
         };
     </script>
-    <%-
-        js({
-            src: theme.mathjax || 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
-            async: true,
-        })
-    %>
+    <script src="<%= theme.mathjax || 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js' %>" async></script>
 <% } %>

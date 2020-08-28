@@ -51,7 +51,7 @@ keywords = keywords.join(',');
     <script>
         /MSIE|Trident/.test(navigator.userAgent) && (location.href = '<%= url_for('/upgrade-browser.html') %>');
     </script>
-    <script>addEventListener("DOMContentLoaded",()=>(t=>{const e={auto:"mdui-theme-layout-auto",enable:"mdui-theme-layout-dark",disable:""};(t=t||localStorage.getItem("dark"))in e||(t="auto");for(const o in e)e[o]&&document.body.classList[o===t?"add":"remove"](e[o]);localStorage.setItem("dark",t)})())</script>
+    <script>window.switchDark=t=>{const a={auto:"mdui-theme-layout-auto",enable:"mdui-theme-layout-dark",disable:""};(t=t||localStorage.getItem("dark"))in a||(t="auto");for(const e in a)a[e]&&document.body.classList[e===t?"add":"remove"](a[e]);localStorage.setItem("dark",t)},addEventListener("DOMContentLoaded",()=>switchDark())</script>
 
     <!-- 导入CSS -->
     <%- partial('partials/import-css.ejs') %>

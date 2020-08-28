@@ -1,10 +1,17 @@
 <%
 let pageTitle = page.title || config.subtitle || '';
-if (is_archive()) pageTitle = '归档';
-if (is_tag()) pageTitle = `标签：${page.tag}`;
-if (is_category()) pageTitle = `分类：${page.category}`;
-if (is_month()) pageTitle += `(${page.year}-${page.month})`;
-if (is_year()) pageTitle += `(${page.year})`;
+if (is_tag()) {
+    pageTitle = `标签：${page.tag}`;
+} else if (is_category()) {
+    pageTitle = `分类：${page.category}`;
+} else if (is_archive()) {
+    pageTitle = '归档';
+    if (is_month()) {
+        pageTitle += `：${page.year}-${page.month.toString().padStart(2, 0)}`;
+    } else if (is_year()) {
+        pageTitle += `：${page.year}`;
+    }
+}
 pageTitle += (pageTitle ? ' | ' : '') + config.title;
 
 let keywords = (page.tags || []).map(e => e.name);
@@ -57,7 +64,7 @@ keywords = keywords.join(',');
     <!-- 添加CSS变量 -->
     <%- partial('partials/css-variables') %>
 </head>
-<body class="mdui-theme-primary-<%= theme.uiux.mdui_primary_color %> mdui-theme-accent-<%= theme.uiux.mdui_accent_color %> mdui-drawer-body-left">
+<body class="mdui-theme-primary-<%= theme.uiux.mdui_primary_theme %> mdui-theme-accent-<%= theme.uiux.mdui_accent_theme %> mdui-drawer-body-left">
     <!-- 抽屉菜单 -->
     <%- partial('partials/navigation-drawer') %>
 
@@ -84,6 +91,14 @@ keywords = keywords.join(',');
         <% theme.scripts.forEach(url => { %>
             <%- js(url) %>
         <% }); %>
+    <% } %>
+    <% if (theme.busuanzi.enable) { %>
+        <%-
+            js({
+                src: theme.busuanzi.script || 'https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js',
+                async: true,
+            })
+        %>
     <% } %>
 </body>
 </html>

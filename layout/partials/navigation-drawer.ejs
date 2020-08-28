@@ -23,7 +23,7 @@
     <div class="mdui-list" mdui-collapse>
         <% Object.keys(theme.drawer.menu).forEach(key => { %>
             <div>
-                <a class="mdui-list-item mdui-ripple" href="<%= theme.drawer.menu[key].href %>">
+                <a class="mdui-list-item mdui-ripple" href="<%= url_for(theme.drawer.menu[key].href) %>">
                     <% if (theme.drawer.menu[key].icon) { %>
                         <i class="mdui-list-item-icon mdui-icon material-icons"><%= theme.drawer.menu[key].icon %></i>
                     <% } else { %>
@@ -36,6 +36,14 @@
                 <div class="mdui-divider"></div>
             <% } %>
         <% }); %>
+        <div class="mdui-divider"></div>
+        <div>
+            <a class="mdui-list-item mdui-ripple" href="<%= url_for('/archives') %>">
+                <i class="mdui-list-item-icon mdui-icon material-icons">collections_bookmark</i>
+                <span class="mdui-list-item-content">归档</span>
+                <small class="mdui-color-theme-accent akarin-drawer-badge"><%= site.posts.length %></small>
+            </a>
+        </div>
         <div class="mdui-collapse-item mdui-collapse-item-open">
             <div class="mdui-list-item mdui-ripple mdui-collapse-item-header">
                 <i class="mdui-list-item-icon mdui-icon material-icons">brightness_4</i>
@@ -43,10 +51,45 @@
                 <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
             </div>
             <div class="mdui-list mdui-collapse-item-body">
-                <div class="mdui-list-item mdui-ripple" data-dark="auto">根据系统主题切换</div>
-                <div class="mdui-list-item mdui-ripple" data-dark="enable">启用</div>
-                <div class="mdui-list-item mdui-ripple" data-dark="disable">禁用</div>
+                <div class="mdui-list-item mdui-ripple" data-dark="auto">
+                    <span class="mdui-list-item-content">根据系统主题切换</span>
+                </div>
+                <div class="mdui-list-item mdui-ripple" data-dark="enable">
+                    <span class="mdui-list-item-content">启用</span>
+                </div>
+                <div class="mdui-list-item mdui-ripple" data-dark="disable">
+                    <span class="mdui-list-item-content">禁用</span>
+                </div>
             </div>
         </div>
+        <% if (theme.busuanzi.enable) { %>
+            <div id="busuanzi_container_site_pv" class="mdui-collapse-item mdui-collapse-item-open">
+                <div class="mdui-list-item mdui-ripple mdui-collapse-item-header">
+                    <i class="mdui-list-item-icon mdui-icon material-icons">insert_chart</i>
+                    <span class="mdui-list-item-content">访问计数</span>
+                    <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                </div>
+                <div class="mdui-list mdui-collapse-item-body">
+                    <% if (theme.busuanzi.site_pv) { %>
+                        <div class="mdui-list-item mdui-ripple">
+                            <span class="mdui-list-item-content">站点访问量</span>
+                            <small id="busuanzi_value_site_pv" class="mdui-color-theme-accent akarin-drawer-badge">Loading</small>
+                        </div>
+                    <% } %>
+                    <% if (theme.busuanzi.site_uv) { %>
+                        <div class="mdui-list-item mdui-ripple">
+                            <span class="mdui-list-item-content">站点访客数</span>
+                            <small id="busuanzi_value_site_uv" class="mdui-color-theme-accent akarin-drawer-badge">Loading</small>
+                        </div>
+                    <% } %>
+                    <% if (theme.busuanzi.page_pv) { %>
+                        <div class="mdui-list-item mdui-ripple">
+                            <span class="mdui-list-item-content">页面访问量</span>
+                            <small id="busuanzi_value_page_pv" class="mdui-color-theme-accent akarin-drawer-badge">Loading</small>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        <% } %>
     </div>
 </nav>

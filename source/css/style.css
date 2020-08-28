@@ -61,6 +61,10 @@ body {
     width: 54px;
     height: 54px;
 }
+.akarin-drawer-badge {
+    border-radius: 1em;
+    padding: 2px 6px;
+}
 
 /* 主页大图 */
 #akarin-home-banner-wrapper {
@@ -84,8 +88,8 @@ body {
 }
 
 /* 返回顶部 */
-#akarin-top img,
-#akarin-top source {
+picture#akarin-top img,
+picture#akarin-top source {
     position: fixed;
     cursor: pointer;
     width: auto;
@@ -96,9 +100,12 @@ body {
     transition: transform ease-out .25s;
     transform: translateX(70%);
 }
-#akarin-top img:hover,
-#akarin-top source:hover {
+picture#akarin-top img:hover,
+picture#akarin-top source:hover {
     transform: translateX(0);
+}
+button#akarin-top {
+    z-index: 1000;
 }
 
 /* hover头像时的旋转效果 */
@@ -148,6 +155,13 @@ body {
 }
 
 /* 文章内容 */
+.akarin-copy-code-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    color: var(--copy-code-btn-color);
+}
 @media (min-width:600px) {
     article.mdui-typo {
         font-size: 16px;

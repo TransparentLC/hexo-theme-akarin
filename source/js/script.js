@@ -119,12 +119,14 @@ new LazyLoad(Array.from(document.querySelectorAll('[data-src]')), {
 // ****************
 (() => {
 
+const top = document.getElementById('akarin-top');
+if (!top) return;
+
 const scroll = () => {
     const bodyScrollTop = document.body.scrollTop;
     const documentScrollTop = document.documentElement.scrollTop;
     const top = bodyScrollTop + documentScrollTop;
     const speed = top / 4;
-    console.log(top);
     if (bodyScrollTop != 0) {
         document.body.scrollTop -= speed;
     } else {
@@ -133,7 +135,20 @@ const scroll = () => {
     if (top) requestAnimationFrame(scroll);
 };
 
-document.getElementById('akarin-top').onclick = () => requestAnimationFrame(scroll);
+top.onclick = () => requestAnimationFrame(scroll);
+
+if (top.tagName.toLowerCase() === 'button') {
+    const documentElement = document.documentElement;
+    const showFab = () => top.classList[
+        (2 * documentElement.scrollTop < documentElement.clientHeight) ? 'add' : 'remove'
+    ]('mdui-fab-hide');
+    let timer;
+    addEventListener('scroll', () => {
+        clearInterval(timer);
+        timer = setTimeout(showFab, 200);
+    });
+    showFab();
+}
 
 })();
 
@@ -165,20 +180,25 @@ if (!article) return;
 
 // 在视频上添加class
 Array.from(article.querySelectorAll('video,.video-container')).forEach(e => {
-    e.classList.add(`mdui-video-${e.tagName.toLowerCase() === 'video' ? 'fluid' : 'container'}`);
-    e.classList.add('mdui-img-rounded');
-    e.classList.add('mdui-center');
-    e.classList.add('mdui-hoverable');
+    e.classList.add(
+        `mdui-video-${e.tagName.toLowerCase() === 'video' ? 'fluid' : 'container'}`,
+        'mdui-img-rounded',
+        'mdui-center',
+        'mdui-hoverable'
+    );
 });
 
 // “复制代码”按钮
-const copyButton = document.createElement('button');
-copyButton.innerHTML = '<i class="mdui-icon material-icons">content_copy</i>';
-copyButton.classList.add('mdui-btn');
-copyButton.classList.add('mdui-btn-icon');
-copyButton.classList.add('mdui-btn-dense');
-copyButton.classList.add('mdui-ripple');
-copyButton.classList.add('mdui-float-right');
+const copyBtn = document.createElement('button');
+copyBtn.innerHTML = '<i class="mdui-icon material-icons">content_copy</i>';
+copyBtn.classList.add(
+    'mdui-btn',
+    'mdui-btn-icon',
+    'mdui-btn-dense',
+    'mdui-ripple',
+    'mdui-m-a-1',
+    'akarin-copy-code-btn'
+);
 const copyCode = code => {
     const range = document.createRange();
     range.selectNodeContents(code);
@@ -190,7 +210,7 @@ const copyCode = code => {
     mdui.snackbar('代码已复制', { timeout: 2000 });
 };
 Array.from(article.querySelectorAll('pre[class^="language-"],pre[class*=" language-"]')).forEach(e => {
-    const btn = copyButton.cloneNode(true);
+    const btn = copyBtn.cloneNode(true);
     btn.onclick = () => copyCode(e.querySelector('code'));
     e.insertAdjacentElement('afterbegin', btn);
 });

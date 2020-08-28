@@ -4,12 +4,9 @@ drawer:
         主页:
             href: /
             icon: home
-        归档:
-            href: /archives
         关于:
             href: /about
             icon: person
-            divider: true
 
 head:
     favicon: /img/favicon.png
@@ -28,9 +25,14 @@ uiux:
     banner_image: https://picsum.photos/1200/500.webp
     banner_image_color: '#e16b8c'
     avatar: https://picsum.photos/200/200.webp
-    mdui_primary_color: pink
-    mdui_accent_color: pink
+    mdui_primary_theme: pink
+    mdui_accent_theme: pink
     post_thumbnail_color: '#03a9f4'
+    copy_code_button_color: '#fff'
+    top:
+        enable: true
+        style: fab
+        # style: akarin
 
 posts:
     default_excerpt: 120
@@ -39,6 +41,13 @@ posts:
         livere:
             enable: false
             uid:
+
+busuanzi:
+    enable: false
+    script: https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.js
+    site_uv: true
+    site_pv: true
+    page_pv: true
 
 # stylesheets loaded in the <head>
 stylesheets:

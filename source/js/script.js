@@ -1,20 +1,19 @@
 ((document) => {
 
-console.log(
-    '%c Project %c hexo-theme-akarin ',
+/**
+ * @param {String} label
+ * @param {String} message
+ * @param {String} color
+ */
+const consoleBadge = (label, message, color) => console.log(
+    `%c ${label} %c ${message} `,
     'color:#fff;background-color:#555;border-radius:3px 0 0 3px',
-    'color:#fff;background-color:#07c;border-radius:0 3px 3px 0'
+    `color:#fff;background-color:${color};border-radius:0 3px 3px 0`
 );
-console.log(
-    '%c Author %c TransparentLC ',
-    'color:#fff;background-color:#555;border-radius:3px 0 0 3px',
-    'color:#fff;background-color:#e54;border-radius:0 3px 3px 0'
-);
-console.log(
-    '%c Source %c https://github.com/TransparentLC/hexo-theme-akarin ',
-    'color:#fff;background-color:#555;border-radius:3px 0 0 3px',
-    'color:#fff;background-color:#9c1;border-radius:0 3px 3px 0'
-);
+
+consoleBadge('Project', 'hexo-theme-akarin', '#07c');
+consoleBadge('Author', 'TransparentLC', '#f84');
+consoleBadge('Source', 'https://github.com/TransparentLC/hexo-theme-akarin', '#4b1');
 
 // ****************
 // 懒加载组件
@@ -52,13 +51,14 @@ class LazyLoad {
             }))
         ).then(result => {
             result.forEach(e => this.imageSupport |= e);
-            // console.log(
-            //     'Image support:',
-            //     this.imageSupportTest
-            //         .map(e => this.imageSupport & e.mask ? e.type : '')
-            //         .filter(e => e)
-            //         .join(', ')
-            // );
+            consoleBadge(
+                'Next-Gen Image',
+                this.imageSupportTest
+                    .map(e => this.imageSupport & e.mask ? e.type : '')
+                    .filter(e => e)
+                    .join(', ') || 'None',
+                '#f6b'
+            );
             image.forEach((/** @type {HTMLElement} */ el) => {
                 if (this.config.loadingSrc) this.setSrc(el, this.config.loadingSrc);
                 this.config.beforeObserve(el);

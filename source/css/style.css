@@ -192,6 +192,24 @@ article.mdui-typo img.mdui-hoverable.medium-zoom-image {
         box-shadow .25s cubic-bezier(.4, 0, .2, 1)
         !important;
 }
+article.mdui-typo a.headerlink::before {
+    position: initial;
+    background-color: transparent;
+    content: '#';
+}
+article.mdui-typo a.headerlink {
+    visibility: hidden;
+    margin-left: -.65em;
+    position: absolute;
+}
+article.mdui-typo h1:hover .headerlink,
+article.mdui-typo h2:hover .headerlink,
+article.mdui-typo h3:hover .headerlink,
+article.mdui-typo h4:hover .headerlink,
+article.mdui-typo h5:hover .headerlink,
+article.mdui-typo h6:hover .headerlink {
+    visibility: visible;
+}
 
 /* 其他工具类 */
 .akarin-util-bg-cover {

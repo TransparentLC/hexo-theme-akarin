@@ -69,7 +69,13 @@
             </blockquote>
         <% } %>
 
-        <%- partial('partials/comment-area') %>
+        <% if (Object.keys(theme.comment).some(k => theme.comment[k].enable)) { %>
+            <% if (page.comments) { %>
+                <%- partial('partials/comment-area') %>
+            <% } else { %>
+                <div class="mdui-typo-subheading mdui-text-center mdui-m-t-2 akarin-util-opacity-half">评论已被作者关闭</div>
+            <% } %>
+        <% } %>
     </article>
 </div>
 

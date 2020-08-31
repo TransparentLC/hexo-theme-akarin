@@ -261,6 +261,7 @@ scripts:
 | `mathjax` | 在文章中加载 MathJax | `false` |
 | `hide_license` | 不显示版权声明 | `false` |
 | `license` | 文章的版权声明 | `theme.posts.license` |
+| `comments` | 是否允许评论 | `true` |
 
 可以将封面图缩放到一个较小的尺寸（例如缩放到高度为 64px）并添加适当的高斯模糊，然后转换为 Data URL 填入 `thumbnail_color`，在清晰的封面图进入视区而还未加载的时候就会先显示模糊的封面图，加载完成后再变为清晰版。
 

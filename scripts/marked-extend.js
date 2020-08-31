@@ -15,4 +15,4 @@ hexo.extend.filter.register('marked:renderer', renderer => {
             </table>
         </div>
     `;
-})
+});

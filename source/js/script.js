@@ -139,7 +139,10 @@ new LazyLoad(Array.from(document.querySelectorAll('[data-src]')), {
     }) : null,
     afterObserve: el => {
         const blurred = el.querySelector('.akarin-blurred-cover');
-        if (blurred) blurred.classList.add('akarin-blurred-cover-fade-out');
+        if (blurred) {
+            blurred.classList.add('akarin-blurred-cover-fade-out');
+            setTimeout(() => blurred.style.display = 'none', 1000);
+        }
     }
 });
 

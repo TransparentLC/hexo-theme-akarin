@@ -156,7 +156,7 @@ button#akarin-top {
 
 /* 封面图模糊效果 */
 .akarin-blurred-cover {
-    filter: url("#blur");
+    filter: url(#blur);
 }
 .akarin-blurred-cover-fade-out {
     transition: opacity 1s;

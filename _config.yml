@@ -71,7 +71,7 @@ comment:
 stats:
     busuanzi:
         enable: false
-        script: https://cdn.jsdelivr.net/npm/busuanzi
+        script: https://cdn.jsdelivr.net/gh/TransparentLC/hexo-theme-akarin/source/js/bsz.min.js
         site_uv: true
         site_pv: true
         page_pv: true

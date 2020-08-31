@@ -56,7 +56,7 @@ class LazyLoad {
                 this.imageSupportTest
                     .map(e => this.imageSupport & e.mask ? e.type : '')
                     .filter(e => e)
-                    .join(', ') || 'None',
+                    .join() || 'None',
                 '#f6b'
             );
             image.forEach((/** @type {HTMLElement} */ el) => {
@@ -195,6 +195,11 @@ if (currentDark) currentDark.classList.add('mdui-list-item-active');
 // 对文章进行处理
 // ****************
 (() => {
+
+// 点击主页的封面图也能打开文章
+Array.from(document.querySelectorAll('[data-entry]')).forEach(e => {
+    e.parentElement.previousElementSibling.onclick = () => location.href = e.href;
+});
 
 const article = document.querySelector('article');
 if (!article) return;

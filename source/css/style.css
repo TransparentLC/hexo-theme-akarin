@@ -154,6 +154,15 @@ button#akarin-top {
     width: 100%;
 }
 
+/* 封面图模糊效果 */
+.akarin-blurred-cover {
+    filter: url("#blur");
+}
+.akarin-blurred-cover-fade-out {
+    transition: opacity 1s;
+    opacity: 0;
+}
+
 /* 文章内容 */
 .akarin-copy-code-btn {
     position: absolute;

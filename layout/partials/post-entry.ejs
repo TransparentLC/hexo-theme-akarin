@@ -1,12 +1,8 @@
 <div class="mdui-card mdui-m-y-5 mdui-hoverable akarin-util-rounded-5">
     <div
         class="akarin-post-entry-bg akarin-util-bg-cover mdui-ripple"
-        <% if (post.thumbnail_color) { %>
-            <% if (isCssColor(post.thumbnail_color)) { %>
-                style="background-color:<%= post.thumbnail_color %>"
-            <% } else { %>
-                style="background-image:url(<%= post.thumbnail_color %>)"
-            <% } %>
+        <% if (post.thumbnail_color && isCssColor(post.thumbnail_color)) { %>
+            style="background-color:<%= post.thumbnail_color %>"
         <% } %>
         <% if (post.thumbnail) { %>
             data-src="<%= post.thumbnail %>"
@@ -18,6 +14,13 @@
             data-src-avif="<%= post.thumbnail_avif %>"
         <% } %>
     >
+        <% if (post.thumbnail_color && !isCssColor(post.thumbnail_color)) { %>
+            <div
+                class="akarin-post-entry-bg akarin-util-bg-cover akarin-blurred-cover"
+                style="background-image:url(<%= post.thumbnail_color %>)"
+            ></div>
+        <% } %>
+
         <div class="akarin-post-entry-title akarin-util-text-gradient">
             <div class="mdui-card-primary">
                 <div class="mdui-card-primary-title mdui-text-color-white-text">

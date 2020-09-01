@@ -156,7 +156,10 @@ button#akarin-top {
 
 /* 封面图模糊效果 */
 .akarin-blurred-cover {
-    filter: url(#blur);
+    /* The “Blur Up” Technique for Loading Background Images  */
+    /* https://css-tricks.com/the-blur-up-technique-for-loading-background-images/#recreating-the-blur-filter-with-svg */
+    filter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='_'%3E%3CfeGaussianBlur stdDeviation='9'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3C/svg%3E#_");
+    transform: translateZ(0);
 }
 .akarin-blurred-cover-fade-out {
     transition: opacity 1s;

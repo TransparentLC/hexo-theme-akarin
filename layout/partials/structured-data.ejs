@@ -33,10 +33,10 @@
             dateModified: page.updated,
             author: {
                 "@type": 'Person',
-                name: config.author,
+                name: page.author || config.author,
                 image: {
                     '@type': 'ImageObject',
-                    'url': theme.uiux.avatar,
+                    'url': page.avatar || theme.uiux.avatar,
                 },
                 description: theme.uiux.slogan,
             },

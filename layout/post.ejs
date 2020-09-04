@@ -42,8 +42,8 @@
     </div>
     <div class="mdui-card-header mdui-valign">
         <div>
-            <img class="mdui-card-header-avatar akarin-hover-spin" src="<%= theme.uiux.avatar %>">
-            <div class="mdui-card-header-title"><%= config.author %></div>
+            <img class="mdui-card-header-avatar akarin-hover-spin" src="<%= page.avatar || theme.uiux.avatar %>">
+            <div class="mdui-card-header-title"><%= page.author || config.author %></div>
             <div class="mdui-card-header-subtitle"><%= date(page.date, 'YYYY-MM-DD HH:mm:ss') %></div>
         </div>
         <% if (page.tags && page.tags.data.length > 0) { %>
@@ -66,7 +66,7 @@
             <blockquote class="mdui-m-x-0 mdui-p-y-1 mdui-m-b-0" style="border-left:4px solid rgba(0,0,0,.36)">
                 <strong><%- license %></strong>
                 <br>
-                <strong>本文作者：<%= config.author %></strong>
+                <strong>本文作者：<%= page.author || config.author %></strong>
                 <br>
                 <strong>本文链接：<a href="<%= removeIndex(page.permalink) %>"><%= removeIndex(page.permalink) %></a></strong>
             </blockquote>

@@ -47,8 +47,8 @@
     <div class="mdui-divider"></div>
     <div class="mdui-card-header mdui-valign">
         <div>
-            <img class="mdui-card-header-avatar akarin-hover-spin" src="<%= theme.uiux.avatar %>">
-            <div class="mdui-card-header-title"><%= config.author %></div>
+            <img class="mdui-card-header-avatar akarin-hover-spin" src="<%= post.avatar || theme.uiux.avatar %>">
+            <div class="mdui-card-header-title"><%= post.author || config.author %></div>
             <div class="mdui-card-header-subtitle"><%= date(post.date, 'YYYY-MM-DD HH:mm:ss') %></div>
         </div>
         <% if (post.tags.data.length > 0) { %>

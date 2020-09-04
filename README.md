@@ -262,6 +262,8 @@ scripts:
 | `hide_license` | 不显示版权声明 | `false` |
 | `license` | 文章的版权声明 | `theme.posts.license` |
 | `comments` | 是否允许评论 | `true` |
+| `author` | 作者的名称，替换网站配置中设定的值 | `config.author` |
+| `avatar` | 作者的头像，替换网站配置中设定的值 | `config.avatar` |
 
 可以将封面图缩放到一个较小的尺寸（例如高度不超过 48px），然后转换为 Data URL 填入 `thumbnail_color`，在清晰的封面图进入视区而还未加载的时候就会先显示模糊的缩略图，加载完成后再渐变为清晰版。
 

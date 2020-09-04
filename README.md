@@ -273,6 +273,8 @@ scripts:
 
 现代图片格式具有更好的压缩效率，节省流量和加载时间。主题对所有的封面图和文章内的插图都支持懒加载和 WebP、AVIF 两种现代图片格式的自适应，可以根据浏览器是否支持某种图片格式来决定是否需要加载对应的图片。几乎所有的浏览器都[支持](https://caniuse.com/#feat=webp) WebP 格式，Firefox 77 和 Chrome 85 已经开始[支持](https://caniuse.com/#feat=avif) AVIF 格式。
 
+> Firefox 用户需要手动在 `about:config` 中设置 `image.avif.enabled` 为 `true` 以开启 AVIF 支持。
+
 由于 Markdown 的 `![]()` 标记只能为图片指定一个 URL，要在文章中使用现代图片格式，需要直接使用 `<img>` 标签：
 
 ```html

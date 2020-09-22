@@ -1,6 +1,6 @@
 <% if (theme.scripts) { %>
     <% theme.scripts.forEach(url => { %>
-        <%- (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('//')) ? `<script src="${url}"></script>` : js(url) %>
+        <%- ['http://', 'https://', '//'].find(e => url.startsWith(e)) ? `<script src="${url}"></script>` : js(url) %>
     <% }); %>
 <% } %>
 

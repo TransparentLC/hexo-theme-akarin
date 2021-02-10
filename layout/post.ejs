@@ -71,15 +71,14 @@
                 <strong>本文链接：<a href="<%= removeIndex(page.permalink) %>"><%= removeIndex(page.permalink) %></a></strong>
             </blockquote>
         <% } %>
-
-        <% if (Object.keys(theme.comment).some(k => theme.comment[k].enable)) { %>
-            <% if (page.comments) { %>
-                <%- partial('partials/comment-area') %>
-            <% } else { %>
-                <div class="mdui-typo-subheading mdui-text-center mdui-m-t-2 akarin-util-opacity-half">评论已被作者关闭</div>
-            <% } %>
-        <% } %>
     </article>
+    <% if (Object.keys(theme.comment).some(k => theme.comment[k].enable)) { %>
+        <% if (page.comments) { %>
+            <%- partial('partials/comment-area') %>
+        <% } else { %>
+            <div class="mdui-typo-subheading mdui-text-center mdui-m-y-5 akarin-util-opacity-half">评论已被作者关闭</div>
+        <% } %>
+    <% } %>
 </div>
 
 <!-- Paginator in post.ejs -->

@@ -1,5 +1,12 @@
 <% if (theme.comment.livere.enable && theme.comment.livere.uid) { %>
-    <div id="lv-container" data-id="city" data-uid="<%= theme.comment.livere.uid %>">
-        <script>((e,t)=>{let n,c=e.getElementsByTagName(t)[0];"function"!=typeof LivereTower&&(n=e.createElement(t),n.src="https://cdn-city.livere.com/js/embed.dist.js",n.async=!0,c.parentNode.insertBefore(n,c))})(document,"script")</script>
+    <div id="lv-container" class="mdui-color-white mdui-p-a-3" data-id="city" data-uid="<%= theme.comment.livere.uid %>">
+        <script>
+            (() => {
+                const script = document.createElement('script');
+                script.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                script.async = true;
+                document.body.appendChild(script);
+            })()
+        </script>
     </div>
 <% } %>

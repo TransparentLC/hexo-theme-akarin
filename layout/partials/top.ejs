@@ -1,6 +1,7 @@
 <% if (theme.uiux.top.enable) { %>
     <% if (theme.uiux.top.style === 'akarin') { %>
         <picture id="akarin-top" title="返回顶部">
+            <source srcset="<%= url_for('/img/top.avif') %>" type="image/avif">
             <source srcset="<%= url_for('/img/top.webp') %>" type="image/webp">
             <img src="<%= url_for('/img/top.png') %>">
         </picture>

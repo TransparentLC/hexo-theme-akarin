@@ -183,8 +183,10 @@ article.mdui-typo pre {
     font-size: 1em;
 }
 article.mdui-typo pre,
+article.mdui-typo code,
 article.mdui-typo pre code {
     line-height: 1.25;
+    font-family: "Cascadia Mono", "Segoe UI Mono", "Ubuntu Mono", "Roboto Mono", Menlo, Monaco, Consolas, monospace;
 }
 article.mdui-typo img {
     max-height: 480px;

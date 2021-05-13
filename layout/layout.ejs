@@ -36,9 +36,9 @@ keywords = keywords.join(',');
         <meta name="baidu-site-verification" content="<%= theme.head.site_verification.baidu %>">
     <% } %>
 
-    <link rel="icon shortcut" type="image/ico" href="<%= url_for(theme.head.favicon) %>">
-    <link rel="icon" href="<%= url_for(theme.head.high_res_favicon) %>">
-    <link rel="apple-touch-icon" href="<%= url_for(theme.head.apple_touch_icon) %>">
+    <link rel="icon shortcut" type="image/ico" href="<%= full_url_for(theme.head.favicon) %>">
+    <link rel="icon" href="<%= full_url_for(theme.head.high_res_favicon) %>">
+    <link rel="apple-touch-icon" href="<%= full_url_for(theme.head.apple_touch_icon) %>">
     <% if (theme.rss) { %>
         <link rel="alternate" type="application/atom+xml" href="<%= theme.rss %>">
     <% } %>

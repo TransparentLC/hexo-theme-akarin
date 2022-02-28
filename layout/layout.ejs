@@ -48,15 +48,13 @@ keywords = keywords.join(',');
         <%- partial('partials/structured-data.ejs') %>
     <% } %>
 
-    <script>
-        /MSIE|Trident/.test(navigator.userAgent) && (location.href = '<%= url_for('/upgrade-browser.html') %>');
-    </script>
-    <script>window.switchDark=t=>{const a={auto:"mdui-theme-layout-auto",enable:"mdui-theme-layout-dark",disable:""};(t=t||localStorage.getItem("dark"))in a||(t="auto");for(const e in a)a[e]&&document.body.classList[e===t?"add":"remove"](a[e]);localStorage.setItem("dark",t)},addEventListener("DOMContentLoaded",()=>switchDark())</script>
-
+    <script>/MSIE|Trident/.test(navigator.userAgent) && (location.href = '<%= url_for('/upgrade-browser.html') %>')</script>
     <!-- 导入CSS -->
     <%- partial('partials/import-css.ejs') %>
 </head>
 <body class="mdui-theme-primary-<%= theme.uiux.mdui_primary_theme %> mdui-theme-accent-<%= theme.uiux.mdui_accent_theme %> mdui-drawer-body-left">
+    <script>window.switchDark=t=>{const a={auto:"mdui-theme-layout-auto",enable:"mdui-theme-layout-dark",disable:""};(t=t||localStorage.getItem("dark"))in a||(t="auto");for(const e in a)a[e]&&document.body.classList[e===t?"add":"remove"](a[e]);localStorage.setItem("dark",t)},switchDark()</script>
+
     <!-- 抽屉菜单 -->
     <%- partial('partials/navigation-drawer') %>
 

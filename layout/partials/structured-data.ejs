@@ -1,7 +1,7 @@
 <% if((page.current === 1) && is_home()) { %>
     <script type="application/ld+json"><%-
         JSON.stringify({
-            '@context': 'http://schema.org',
+            '@context': 'https://schema.org',
             '@type': 'Website',
             publisher: {
                 '@type': 'Organization',
@@ -20,17 +20,27 @@
             description: config.description,
         })
     %></script>
+
+    <meta property="og:site_name" content="<%= config.title %>">
+    <meta property="og:title" content="<%= config.title %>">
+    <meta property="og:description" content="<%= config.description %>">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<%= config.url %>">
+    <meta property="og:image" content="<%= theme.uiux.banner_image %>">
 <% } %>
 
 <% if (is_post()) { %>
     <script type="application/ld+json"><%-
         JSON.stringify({
-            '@context': 'http://schema.org',
+            '@context': 'https://schema.org',
             '@type': 'BlogPosting',
-            mainEntityOfPage: config.url + url_for(path),
+            mainEntityOfPage:  {
+                '@type': 'WebPage',
+                '@id': page.permalink,
+            },
             headline: page.title,
-            datePublished: page.date,
-            dateModified: page.updated,
+            datePublished: page.date.toISOString(),
+            dateModified: page.updated.toISOString(),
             author: {
                 "@type": 'Person',
                 name: page.author || config.author,
@@ -49,4 +59,19 @@
             description: page.description || strip_html(page.excerpt) || config.description,
         })
     %></script>
+
+    <meta property="og:site_name" content="<%= config.title %>">
+    <meta property="og:title" content="<%= page.title %>">
+    <meta property="og:description" content="<%= page.description || strip_html(page.excerpt) || config.description %>">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="<%= page.permalink %>">
+    <meta property="og:image" content="<%= page.thumbnail || page.avatar || theme.uiux.avatar %>">
+    <meta property="article:published_time" content="<%= page.date.toISOString() %>">
+    <meta property="article:modified_time" content="<%= page.updated.toISOString() %>">
+    <meta property="article:author" content="<%= page.author || config.author %>">
+    <% if ((theme.head.keywords ? [theme.head.keywords] : []).concat(page.tags ? page.tags.data.map(e => e.name) : []).length) { %>
+        <% (theme.head.keywords ? [theme.head.keywords] : []).concat(page.tags ? page.tags.data.map(e => e.name) : []).forEach(e => { %>
+            <meta property="article:tag" content="<%= e %>">
+        <% }) %>
+    <% } %>
 <% } %>

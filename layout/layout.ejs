@@ -48,7 +48,7 @@ keywords = keywords.join(',');
         <%- partial('partials/structured-data.ejs') %>
     <% } %>
 
-    <script>/MSIE|Trident/.test(navigator.userAgent) && (location.href = '<%= url_for('/upgrade-browser.html') %>')</script>
+    <script>document.documentMode && (location.href = '<%= url_for('/upgrade-browser.html') %>')</script>
     <!-- 导入CSS -->
     <%- partial('partials/import-css.ejs') %>
 </head>

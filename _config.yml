@@ -84,9 +84,11 @@ stylesheets:
 - /css/mdui.min.css
 - /css/prism-line-numbers.min.css
 - /css/prism-vsc-dark-plus.min.css
+- /css/APlayer.min.css
 - /css/style.css
 
 scripts:
 - /js/mdui.min.js
 - /js/medium-zoom.min.js
+- /js/APlayer.min.js
 - /js/script.js

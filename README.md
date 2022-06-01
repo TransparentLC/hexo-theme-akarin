@@ -209,10 +209,12 @@ stylesheets:
 - /css/mdui.min.css
 - /css/prism-line-numbers.min.css
 - /css/prism-vsc-dark-plus.min.css
+- /css/APlayer.min.css
 - /css/style.css
 scripts:
 - /js/mdui.min.js
 - /js/medium-zoom.min.js
+- /js/APlayer.min.js
 - /js/script.js
 ```
 
@@ -229,11 +231,13 @@ scripts:
     * [MDUI](https://github.com/zdhxiong/mdui/blob/v1/dist/css/mdui.min.css)
     * PrismJS 的任意一个[主题](https://github.com/PrismJS/prism-themes)（如果使用了 PrismJS）
     * PrismJS 的[行号显示插件](https://github.com/PrismJS/prism/blob/master/plugins/line-numbers/prism-line-numbers.css)（如果使用了行号显示功能）
+    * APlayer 的 [CSS 文件](https://github.com/DIYgod/APlayer/blob/master/dist/APlayer.min.css)（如果你需要使用内置的 APlayer 标签插件，后述）
     * 本主题的 [CSS 文件](https://github.com/TransparentLC/hexo-theme-akarin/blob/master/source/css/style.css)
 * 至少需要导入以下 JS：
     * [MDUI](https://github.com/zdhxiong/mdui/blob/v1/dist/js/mdui.min.js)
     * [medium-zoom](https://github.com/francoischalifour/medium-zoom#installation)
     * PrismJS 本体和各个插件，参见 [Hexo 文档](https://hexo.io/zh-cn/docs/syntax-highlight.html#preprocess)（如果使用了浏览器端高亮）
+    * APlayer 的 [JS 文件](https://github.com/DIYgod/APlayer/blob/master/dist/APlayer.min.js)（如果你需要使用内置的 APlayer 标签插件，后述）
     * 本主题的 [JS 文件](https://github.com/TransparentLC/hexo-theme-akarin/blob/master/source/js/script.js)
 * 如果对加载速度有更高的要求，可以尝试以下方法：
     * 将主题的 CSS 和 JS 文件进行 minify，相关工具：[Terser](https://xem.github.io/terser-online/)、[clean-css](https://jakubpawlowicz.github.io/clean-css/)
@@ -268,6 +272,34 @@ scripts:
 可以将封面图缩放到一个较小的尺寸（例如高度不超过 48px），然后转换为 Data URL 填入 `thumbnail_color`，在清晰的封面图进入视区而还未加载的时候就会先显示模糊的缩略图，加载完成后再渐变为清晰版。
 
 这个缩略图的大小建议控制在 2 KB 左右。
+
+### APlayer 标签插件
+
+内置了简单的 [APlayer](https://github.com/DIYgod/APlayer) 标签插件，可以快速在文章中插入音乐播放器。
+
+```plain
+{% aplayerlite title author audioURL [coverURL] [lrcURL] %}
+
+{% aplayerlitelrc title author audioURL [coverURL] %}
+[00:00.000] LRC歌词内容
+[00:01.000] ……
+{% endaplayerlitelrc %}
+```
+
+使用例：
+
+```plain
+{%
+    aplayerlite
+    "TOKIMEKI Runners"
+    "虹ヶ咲学園スクールアイドル同好会"
+    "https://fs-im-kefu.7moor-fs2.com/im/2768a390-5474-11ea-afc9-7b323e3e16c0/lbsgI27N.m4a"
+    "https://yzf.qq.com/fsnb/kf-file/kf_pic/20220601/KFPIC_Au_WXIMAGE_007732d2a6c24a438413c7ca925d4dd7.jpg"
+    "https://fs-im-kefu.7moor-fs2.com/im/2768a390-5474-11ea-afc9-7b323e3e16c0/T-2g8Whd.txt"
+%}
+```
+
+注意：**这个标签插件的功能和使用方法和 [hexo-tag-aplayer](https://github.com/MoePlayer/hexo-tag-aplayer) 并不相同。** 如果它不能满足你的需求，你仍然可以继续选择使用 hexo-tag-aplayer 插件添加音乐播放器。
 
 ### 使用现代图片格式
 

@@ -15,6 +15,8 @@ consoleBadge('Project', 'hexo-theme-akarin', '#07c');
 consoleBadge('Author', 'TransparentLC', '#f84');
 consoleBadge('Source', 'https://github.com/TransparentLC/hexo-theme-akarin', '#4b1');
 
+window.APlayer && Array.isArray(window.aplayersLite) && (aplayersLite = aplayersLite.map(e => new APlayer(e)));
+
 // ****************
 // 懒加载组件
 // ****************

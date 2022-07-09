@@ -25,7 +25,7 @@ const createAPlayerHTML = aplayerConfig => {
 hexo.extend.tag.register(
     'aplayerlite',
     /**
-     * @param {[String, String, String, String, String]} args
+     * @param {String[]} args
      * @returns {String}
      */
     args => {
@@ -49,7 +49,7 @@ hexo.extend.tag.register(
 hexo.extend.tag.register(
     'aplayerlitelrc',
     /**
-     * @param {[String, String, String, String]} args
+     * @param {String[]} args
      * @param {String} content
      * @returns {String}
      */
@@ -69,5 +69,5 @@ hexo.extend.tag.register(
     },
     {
         ends: true,
-    }
+    },
 );

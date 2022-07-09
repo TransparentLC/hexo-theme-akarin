@@ -8,9 +8,9 @@
 
 ## 主题设置
 
-> 以下的“网站配置”指的是 Hexo 博客目录下的 _config.yml，“主题配置”指的是 theme/hexo-theme-akarin 目录下的 _config.yml。
+> 以下的“网站配置”指的是 Hexo 博客目录下的 `_config.yml`，“主题配置”指的是 `theme/hexo-theme-akarin` 目录下的 `_config.yml`（也可以将这一文件以 `_config.hexo-theme-akarin.yml` 的名称放在 Hexo 博客目录）。
 
-[安装 Hexo](https://hexo.io/zh-cn/docs/#%E5%AE%89%E8%A3%85) 并成功[建站](https://hexo.io/zh-cn/docs/setup)后，将主题下载到 theme/hexo-theme-akarin 目录，然后在网站配置中修改 `theme: hexo-theme-akarin` 即可启用主题。
+安装 Node.js 18 和 [Hexo 6](https://hexo.io/zh-cn/docs/#%E5%AE%89%E8%A3%85)（或以上版本）并成功[建站](https://hexo.io/zh-cn/docs/setup)后，将主题下载到 `theme/hexo-theme-akarin` 目录，执行 `npm install` 安装依赖，然后在网站配置中修改 `theme: hexo-theme-akarin` 即可启用主题。
 
 仅支持使用 Hexo 5 添加的 [PrismJS](https://hexo.io/zh-cn/docs/syntax-highlight.html#PrismJS) 进行代码高亮，未支持 Highlight.js。
 
@@ -259,9 +259,10 @@ scripts:
 | `categories` | 分类 |  |
 | `excerpt` | 摘要 | 从文章的开头一部分截取，长度为 `theme.posts.default_excerpt` |
 | `thumbnail` | 封面图 |  |
-| `thumbnail_webp` | WebP 格式的封面图，参见“使用现代图片格式”部分 |  |
+| `thumbnail_webp` | WebP 格式的封面图 |  |
 | `thumbnail_avif` | AVIF 格式的封面图 |  |
-| `thumbnail_color` | 封面图未加载时显示的颜色，也可以填入一个图片的 Data URL |  |
+| `thumbnail_jxl` | JPEG XL 格式的封面图 |  |
+| `thumbnail_color` | 封面图未加载时显示的颜色，也可以填入一个图片的 Data URL 或留空以自动生成 |  |
 | `mathjax` | 在文章中加载 MathJax | `false` |
 | `hide_license` | 不显示版权声明 | `false` |
 | `license` | 文章的版权声明 | `theme.posts.license` |
@@ -269,9 +270,7 @@ scripts:
 | `author` | 作者的名称，替换网站配置中设定的值 | `config.author` |
 | `avatar` | 作者的头像，替换网站配置中设定的值 | `config.avatar` |
 
-可以将封面图缩放到一个较小的尺寸（例如高度不超过 48px），然后转换为 Data URL 填入 `thumbnail_color`，在清晰的封面图进入视区而还未加载的时候就会先显示模糊的缩略图，加载完成后再渐变为清晰版。
-
-这个缩略图的大小建议控制在 2 KB 左右。
+关于封面图相关选项的详细介绍，可以参见下面的[“使用现代图片格式和图片渐进式加载”](#使用现代图片格式和图片渐进式加载)部分。
 
 ### APlayer 标签插件
 
@@ -289,8 +288,7 @@ scripts:
 使用例：
 
 ```plain
-{%
-    aplayerlite
+{% aplayerlite
     "TOKIMEKI Runners"
     "虹ヶ咲学園スクールアイドル同好会"
     "https://fs-im-kefu.7moor-fs2.com/im/2768a390-5474-11ea-afc9-7b323e3e16c0/lbsgI27N.m4a"
@@ -301,21 +299,35 @@ scripts:
 
 注意：**这个标签插件的功能和使用方法和 [hexo-tag-aplayer](https://github.com/MoePlayer/hexo-tag-aplayer) 并不相同。** 如果它不能满足你的需求，你仍然可以继续选择使用 hexo-tag-aplayer 插件添加音乐播放器。
 
-### 使用现代图片格式
+### 使用现代图片格式和图片渐进式加载
 
-现代图片格式具有更好的压缩效率，节省流量和加载时间。主题对所有的封面图和文章内的插图都支持懒加载和现代图片格式 WebP、AVIF、JPEG XL 的自适应，可以根据浏览器是否支持某种图片格式来决定是否需要加载对应的图片。
+WebP、AVIF、JPEG XL 等现代图片格式具有更好的压缩效率，可以节省流量和加载时间。
 
 * 几乎所有的浏览器都[支持](https://caniuse.com/webp) WebP 格式。
-* Firefox 77 和 Chrome 85 已经开始[支持](https://caniuse.com/avif) AVIF 格式，Firefox 用户需要手动在 `about:config` 中设置 `image.avif.enabled` 为 `true` 以开启 AVIF 支持。
+* Firefox 77 和 Chrome 85 及之后的版本[支持](https://caniuse.com/avif) AVIF 格式。
 * 目前各浏览器对 JPEG XL 的[支持](https://caniuse.com/jpegxl)均处于实验状态。
 
-由于 Markdown 的 `![]()` 标记只能为图片指定一个 URL，要在文章中使用现代图片格式，需要直接使用 `<img>` 标签：
+图片渐进式加载是在传统的懒加载的基础上进行的进一步优化，在图片加载前以从原图缩小的模糊缩略图作为占位符，以 Data URL 嵌入到网页上并以原图的尺寸显示，加载完成后再以渐变方式从缩略图过渡到原图（具体的效果可以参见静态站点生成器 Gatsby 的插件 gatsby-image 的 [Blur Up 示例](https://using-gatsby-image.gatsbyjs.org/blur-up/)）。这种加载方式符合用户在等待过程中希望图片逐渐被下载的预期，同时也避免了传统的懒加载使用 1px 空白图片或加载动画作为占位符，在原图加载后由于尺寸不同而引起的网页布局抖动问题。
 
-```html
-<img
-    data-src="image.jpg"
-    data-src-webp="image.webp"
-    data-src-avif="image.avif"
-    data-src-jpegxl="image.jxl"
->
+主题对所有的封面图和文章内的插图都支持现代图片格式的自适应和渐进式加载效果，可以根据浏览器的支持情况来决定加载哪一种格式的图片。
+
+对于封面图，可以在 Front-matter 中通过 `thumbnail_{webp,avif,jxl}` 指定现代图片格式的路径。如果 `thumbnail_color` 留空，则会自动生成一个不超过 64px 的缩略图作为占位符。
+
+对于文章内的插图，可以通过以下标签插件指定各格式图片的路径：
+
+```plain
+{% img_blur
+    src:image.jpg
+    webp:image.webp
+    avif:image.avif
+    jxl:image.jxl
+    alt
+    title
+%}
 ```
+
+`alt` 和 `title` 是可选的。除传统格式 `src` 外，其他的现代图片格式路径不需要全部指定。在生成网页时会自动生成一个不超过 32px 的缩略图作为的占位符。
+
+图片路径可以是本地资源或在线加载的 URL。生成过的缩略图将根据图片路径和缩略图大小而缓存到主题所在目录的 `thumbnail-cache.json` 文件中。
+
+> 由于图片处理库 [sharp](https://sharp.pixelplumbing.com/) 目前暂不支持 JPEG XL，对 AVIF 的支持也存在一些问题，因此目前只会尝试从 WebP 格式和传统格式的图片生成缩略图。

@@ -1,0 +1,11 @@
+{
+  "engine": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "sharp": "^0.30.7"
+  },
+  "devDependencies": {
+    "hexo-log": "^3.0.0"
+  }
+}

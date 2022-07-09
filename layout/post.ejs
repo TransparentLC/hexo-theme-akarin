@@ -13,10 +13,13 @@
         <% if (page.thumbnail_avif) { %>
             data-src-avif="<%= page.thumbnail_avif %>"
         <% } %>
+        <% if (page.thumbnail_jxl) { %>
+            data-src-jxl="<%= page.thumbnail_jxl %>"
+        <% } %>
     >
         <% if (page.thumbnail_color && !isCssColor(page.thumbnail_color)) { %>
             <div
-                class="akarin-post-bg akarin-util-bg-cover akarin-blurred-cover"
+                class="akarin-post-bg akarin-util-bg-cover akarin-blurred"
                 style="background-image:url(<%= page.thumbnail_color %>)"
             ></div>
         <% } %>

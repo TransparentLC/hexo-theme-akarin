@@ -1,4 +1,4 @@
-((document) => {
+(document => {
 
 /**
  * @param {String} label
@@ -8,7 +8,7 @@
 const consoleBadge = (label, message, color) => console.log(
     `%c ${label} %c ${message} `,
     'color:#fff;background-color:#555;border-radius:3px 0 0 3px',
-    `color:#fff;background-color:${color};border-radius:0 3px 3px 0`
+    `color:#fff;background-color:${color};border-radius:0 3px 3px 0`,
 );
 
 consoleBadge('Project', 'hexo-theme-akarin', '#07c');
@@ -22,33 +22,53 @@ window.APlayer && Array.isArray(window.aplayersLite) && (aplayersLite = aplayers
 // ****************
 (() => {
 
-/**
- * @typedef {Object} LazyLoadConfig
- * @property {HTMLElement} [root]
- * @property {String} [rootMargin]
- * @property {Number|Number[]} [threshold]
- * @property {String} [loadingSrc]
- * @property {function(HTMLElement)} [beforeObserve]
- * @property {function(HTMLElement)} [afterObserve]
- */
-
 class LazyLoad {
+    /** @type {{type: String, img: String, mask: Number}[]} */
+    imageSupportTest = Object.freeze([
+        Object.freeze({
+            type: 'webp',
+            img: 'data:image/webp;base64,UklGRjIAAABXRUJQVlA4ICYAAACyAgCdASoCAAEALmk0mk0iIiIiIgBoSygABc6zbAAA/v56QAAAAA',
+            mask: 1 << 0,
+        }),
+        Object.freeze({
+            type: 'avif',
+            img: 'data:image/avif;base64,AAAAHGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZgAAAPJtZXRhAAAAAAAAAChoZGxyAAAAAAAAAABwaWN0AAAAAAAAAAAAAAAAbGliYXZpZgAAAAAOcGl0bQAAAAAAAQAAAB5pbG9jAAAAAEQAAAEAAQAAAAEAAAEWAAAAFAAAAChpaW5mAAAAAAABAAAAGmluZmUCAAAAAAEAAGF2MDFDb2xvcgAAAABqaXBycAAAAEtpcGNvAAAAFGlzcGUAAAAAAAAAAQAAAAEAAAAQcGl4aQAAAAADCAgIAAAADGF2MUOBTQgAAAAAE2NvbHJuY2x4AAIAAgACgAAAABdpcG1hAAAAAAAAAAEAAQQBAoMEAAAAHG1kYXQSAAoFWAAOxIAyCRAAAAAP+I9ngg',
+            mask: 1 << 1,
+        }),
+        Object.freeze({
+            type: 'jxl',
+            img: 'data:image/jxl;base64,/wr6HwGRCAYBACQAS4oLFgATIAkn',
+            mask: 1 << 2,
+        }),
+    ])
+    defaults = Object.freeze({
+        root: null,
+        rootMargin: '0px',
+        threshold: 0,
+        loadingSrc: null,
+        beforeObserve: () => {},
+        afterObserve: () => {},
+    })
+
     /**
      * @param {HTMLElement[]} image
-     * @param {LazyLoadConfig} config
+     * @param {{
+     *  root: HTMLElement,
+     *  rootMargin: String,
+     *  threshold: Number | Number[],
+     *  loadingSrc: String,
+     *  beforeObserve: (e: HTMLElement) => void,
+     *  afterObserve: (e: HTMLElement) => void,
+     * }} config
      */
     constructor(image, config) {
-        this.config = Object.assign({}, this.defaults, config);
+        this.config = {...this.defaults, ...config};
         this.imageSupport = 0;
-        this.observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) this.load(entry.target);
-            });
-        }, this.config);
+        this.observer = new IntersectionObserver(entries => entries.forEach(entry => entry.isIntersecting && this.load(entry.target)), this.config);
         Promise.all(
             this.imageSupportTest.map(e => new Promise(resolve => {
                 const testImg = new Image;
-                testImg.onload = testImg.onerror = () => resolve((testImg.width > 0) ? e.mask : 0);
+                testImg.onload = testImg.onerror = () => resolve(testImg.width && e.mask);
                 testImg.src = e.img;
             }))
         ).then(result => {
@@ -110,34 +130,6 @@ class LazyLoad {
     }
 }
 
-Object.assign(LazyLoad.prototype, {
-    imageSupportTest: Object.freeze([
-        Object.freeze({
-            type: 'webp',
-            img: 'data:image/webp;base64,UklGRjIAAABXRUJQVlA4ICYAAACyAgCdASoCAAEALmk0mk0iIiIiIgBoSygABc6zbAAA/v56QAAAAA==',
-            mask: 1 << 0,
-        }),
-        Object.freeze({
-            type: 'avif',
-            img: 'data:image/avif;base64,AAAAHGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZgAAAPJtZXRhAAAAAAAAAChoZGxyAAAAAAAAAABwaWN0AAAAAAAAAAAAAAAAbGliYXZpZgAAAAAOcGl0bQAAAAAAAQAAAB5pbG9jAAAAAEQAAAEAAQAAAAEAAAEWAAAAFAAAAChpaW5mAAAAAAABAAAAGmluZmUCAAAAAAEAAGF2MDFDb2xvcgAAAABqaXBycAAAAEtpcGNvAAAAFGlzcGUAAAAAAAAAAQAAAAEAAAAQcGl4aQAAAAADCAgIAAAADGF2MUOBTQgAAAAAE2NvbHJuY2x4AAIAAgACgAAAABdpcG1hAAAAAAAAAAEAAQQBAoMEAAAAHG1kYXQSAAoFWAAOxIAyCRAAAAAP+I9ngg==',
-            mask: 1 << 1,
-        }),
-        Object.freeze({
-            type: 'jpegxl',
-            img: 'data:image/jxl;base64,/wr6HwGRCAYBACQAS4oLFgATIAkn',
-            mask: 1 << 2,
-        }),
-    ]),
-    defaults: Object.freeze({
-        root: null,
-        rootMargin: '0px',
-        threshold: 0,
-        loadingSrc: null,
-        beforeObserve: () => {},
-        afterObserve: () => {},
-    }),
-})
-
 new LazyLoad(Array.from(document.querySelectorAll('[data-src]')), {
     beforeObserve: el => (el.tagName.toLowerCase() === 'img') ? mediumZoom(el, {
         margin: 16,
@@ -145,10 +137,12 @@ new LazyLoad(Array.from(document.querySelectorAll('[data-src]')), {
         background: 'rgba(0,0,0,.85)',
     }) : null,
     afterObserve: el => {
-        const blurred = el.querySelector('.akarin-blurred-cover');
+        const blurred = (el.nextElementSibling && el.nextElementSibling.classList.contains('akarin-blurred'))
+            ? el.nextElementSibling
+            : el.querySelector('.akarin-blurred');
         if (blurred) {
-            blurred.classList.add('akarin-blurred-cover-fade-out');
-            setTimeout(() => blurred.style.visibility = 'hidden', 1000);
+            setTimeout(() => blurred.classList.add('akarin-blurred-fade-out'), 50);
+            setTimeout(() => blurred.style.visibility = 'hidden', 1050);
         }
     }
 });
@@ -219,9 +213,7 @@ if (currentDark) currentDark.classList.add('mdui-list-item-active');
 (() => {
 
 // 点击主页的封面图也能打开文章
-Array.from(document.querySelectorAll('[data-entry]')).forEach(e => {
-    e.parentElement.previousElementSibling.onclick = () => location.href = e.href;
-});
+Array.from(document.querySelectorAll('[data-entry]')).forEach(e => e.parentElement.previousElementSibling.onclick = () => location.href = e.href);
 
 const article = document.querySelector('article');
 if (!article) return;

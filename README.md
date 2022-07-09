@@ -111,7 +111,7 @@ uiux:
 | `banner_image_color` | 背景图未加载时显示的颜色 |  |
 | `mdui_primary_theme` | MDUI 的主题色，参见[这里](https://www.mdui.org/docs/color#color) |  |
 | `mdui_accent_theme` | MDUI 的强调色 |  |
-| `post_thumbnail_color` | 文章的封面图未加载时显示的颜色，也可以在每一篇文章的 Front-matter 里单独设定，参见“Front-matter”部分 |  |
+| `post_thumbnail_color` | 文章的封面图未加载时显示的颜色，也可以在每一篇文章的 Front-matter 里单独设定，参见[“Front-matter”](#Front-matter)部分 |  |
 | `copy_code_button_color` | 文章中“复制代码”按钮的颜色 |  |
 | `top.enable` | 是否在页面右下角显示“返回顶部”的按钮 | `false` |
 | `top.style` | 设为 `fab` 则以浮动操作按钮显示 |  |
@@ -151,7 +151,7 @@ links:
 | `list.key.avatar` | 头像 | `theme.links.default_avatar` |
 | `list.key.description` | 链接的介绍 |  |
 
-要生成友链页面，你需要在网站的 source 文件夹中自定义一个文件夹（例如 friend），然后在这个文件夹里新建 index.md，写入以下内容：
+要生成友链页面，你需要在网站的 source 文件夹中自定义一个文件夹（例如 friend），然后在这个文件夹里新建 `index.md`，写入以下内容：
 
 ```
 ---
@@ -205,6 +205,8 @@ stats:
 ```yaml
 mathjax:
 rss:
+minify:
+    enable: true
 stylesheets:
 - /css/mdui.min.css
 - /css/prism-line-numbers.min.css
@@ -222,6 +224,7 @@ scripts:
 | --- | --- | --- |
 | `mathjax` | 加载 MathJax 的路径 | 使用 [jsDelivr 的 CDN](https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js) |
 | `rss` | RSS 的路径，留空则导航菜单中的 `preset:rss` 不会显示 |  |
+| `minify_html` | 对生成的 HTML 进行压缩，参见[“HTML 压缩”](#HTML-压缩)部分 |  |
 | `stylesheets` | 需要导入的其它 CSS|  |
 | `scripts` | 需要导入的其它 JS |  |
 
@@ -241,12 +244,11 @@ scripts:
     * 本主题的 [JS 文件](https://github.com/TransparentLC/hexo-theme-akarin/blob/master/source/js/script.js)
 * 如果对加载速度有更高的要求，可以尝试以下方法：
     * 将主题的 CSS 和 JS 文件进行 minify，相关工具：[Terser](https://xem.github.io/terser-online/)、[clean-css](https://jakubpawlowicz.github.io/clean-css/)
-    *  使用 [hexo-html-minifier](https://github.com/hexojs/hexo-html-minifier) 也可以对生成的网页进行 minify
     * 使用 [jsDelivr](https://www.jsdelivr.com/) 等公共 CDN 服务
     * 对于 jsDelivr，可以使用[合并文件](https://www.jsdelivr.com/features#combine)功能，减少网络请求数并提高压缩比，还可以在文件名中加上 `min` 自动 minify
     * 下载 MDUI 的源代码，根据主题配置中设定的主题色和强调色（`theme.uiux.mdui_primary/accent_theme`），去除不需要的主题和组件后自行编译 CSS 和 JS，替换主题自带的完整版。可以参考这里修改源代码 src 目录下的对应文件：[index.ts](https://pastebin.com/VZGCd2pf)、[index.less](https://pastebin.com/bLy8SxRM)
 
-### Front-matter
+## Front-matter
 
 参见 [Hexo 文档](https://hexo.io/zh-cn/docs/front-matter)，主题还额外支持一些 Front-matter：
 
@@ -271,6 +273,8 @@ scripts:
 | `avatar` | 作者的头像，替换网站配置中设定的值 | `config.avatar` |
 
 关于封面图相关选项的详细介绍，可以参见下面的[“使用现代图片格式和图片渐进式加载”](#使用现代图片格式和图片渐进式加载)部分。
+
+## 各种小功能
 
 ### APlayer 标签插件
 
@@ -331,3 +335,31 @@ WebP、AVIF、JPEG XL 等现代图片格式具有更好的压缩效率，可以�
 图片路径可以是本地资源或在线加载的 URL。生成过的缩略图将根据图片路径和缩略图大小而缓存到主题所在目录的 `thumbnail-cache.json` 文件中。
 
 > 由于图片处理库 [sharp](https://sharp.pixelplumbing.com/) 目前暂不支持 JPEG XL，对 AVIF 的支持也存在一些问题，因此目前只会尝试从 WebP 格式和传统格式的图片生成缩略图。
+
+### HTML 压缩
+
+主题内置了使用 [html-minifier-terser](https://github.com/terser/html-minifier-terser) 实现的 HTML 压缩功能。已有的插件 [hexo-html-minifier](https://github.com/hexojs/hexo-html-minifier) 所依赖的 [html-minifier](https://github.com/kangax/html-minifier) 似乎已经弃坑了。启用压缩可以将 HTML 文件的大小缩减到 70-90% 左右。
+
+在主题配置中将 `minify_html.enable` 设为 `true` 即可启用，还可以添加其它的 html-minifier-terser 压缩选项：
+
+```yaml
+minify_html:
+    enable: true
+    # 以下是默认设定，除非需要覆盖，否则并不需要写入主题配置
+    collapseWhitespace: true
+    collapseBooleanAttributes: true
+    decodeEntities: true
+    removeComments: true
+    removeRedundantAttributes: true
+    removeScriptTypeAttributes: true
+    removeStyleLinkTypeAttributes: true
+    removeEmptyAttributes: true
+    useShortDoctype: true
+    sortAttributes: true
+    sortClassName: true
+    processConditionalComments: true
+    processScripts:
+        - application/ld+json
+    minifyCSS: true
+    minifyJS: true
+```

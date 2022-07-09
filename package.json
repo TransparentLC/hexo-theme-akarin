@@ -3,6 +3,7 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
+    "html-minifier-terser": "^7.0.0-beta.0",
     "sharp": "^0.30.7"
   },
   "devDependencies": {

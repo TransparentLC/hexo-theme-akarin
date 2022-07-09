@@ -80,6 +80,9 @@ mathjax:
 
 rss:
 
+minify_html:
+    enable: true
+
 stylesheets:
 - /css/mdui.min.css
 - /css/prism-line-numbers.min.css

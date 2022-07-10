@@ -1,4 +1,3 @@
-const hexoLog = require('hexo-log');
 const htmlMinifier = require('html-minifier-terser');
 
 hexo.extend.filter.register('after_render:html', async (str, data) => {

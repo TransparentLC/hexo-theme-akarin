@@ -24,7 +24,7 @@
         <% Object.keys(theme.drawer.menu).forEach(key => { %>
             <% if (theme.drawer.menu[key].preset === 'archive') { %>
                 <div>
-                    <a class="mdui-list-item mdui-ripple" href="<%= url_for('/archives') %>">
+                    <a class="mdui-list-item mdui-ripple" href="<%= url_for('/archives/') %>">
                         <i class="mdui-list-item-icon mdui-icon material-icons">collections_bookmark</i>
                         <span class="mdui-list-item-content"><%= key %></span>
                         <small class="mdui-color-theme-accent akarin-drawer-badge"><%= site.posts.length %></small>

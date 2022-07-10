@@ -1,17 +1,14 @@
 const fs = require('fs');
-const hexoLog = require('hexo-log');
 const path = require('path');
 const sharp = require('sharp');
 
 // Sharp v0.30.7 doesn't support JPEG XL, raises "heif: Invalid input" error while reading AVIF.
 
-const logger = hexoLog({ debug: false });
-
 /** @type {Record<String, [Number, Number, String]>} */
 const thumbnailCache = {};
 const thumbnailCachePath = path.join(hexo.theme_dir, 'thumbnail-cache.json');
 
-logger.debug(`Thumbnail cache path: ${thumbnailCachePath}`);
+hexo.log.debug(`Thumbnail cache path: \x1b[35m${thumbnailCachePath}\x1b[39m`);
 
 hexo.extend.filter.register('after_init', () => {
     if (!fs.existsSync(thumbnailCachePath)) return;
@@ -35,7 +32,7 @@ const createThumbnail = async (source, size = 32) => {
     const cacheKey = `${source}:${size}`;
     if (cacheKey in thumbnailCache) {
         const [thumbnailBase64, width, height] = thumbnailCache[cacheKey];
-        logger.debug(`Load thumbnail from cache with key: ${cacheKey} (Length: ${thumbnailBase64.length})`);
+        hexo.log.debug(`Thumbnail loaded from cache: \x1b[35m${cacheKey}\x1b[39m (\x1b[36m${thumbnailBase64.length}\x1b[39m bytes)`);
         return {
             thumbnailBase64,
             width,
@@ -79,7 +76,7 @@ const createThumbnail = async (source, size = 32) => {
         }).toBuffer()).toString('base64').replace(/=+$/, '');
     }
     thumbnailCache[cacheKey] = [thumbnailBase64, width, height];
-    logger.debug(`Create thumbnail and save to cache with key: ${cacheKey} (Length: ${thumbnailBase64.length})`);
+    hexo.log.debug(`Thumbnail created: \x1b[35m${cacheKey}\x1b[39m (\x1b[36m${thumbnailBase64.length}\x1b[39m bytes)`);
     return {
         thumbnailBase64,
         width,
@@ -135,7 +132,7 @@ hexo.extend.tag.register(
                     </figure>
                 `;
             } catch (error) {
-                logger.warn(`Failed to create thumbnail for ${source} in ${this.full_source} (${error})`)
+                hexo.log.warn(`Failed to create thumbnail from \x1b[35m${source}\x1b[39m in \x1b[35m${this.full_source}\x1b[39m (\x1b[31m${error}\x1b[39m)`);
             }
         }
         return `
@@ -164,7 +161,7 @@ hexo.extend.filter.register('before_post_render', async data => {
             data.thumbnail_color = (await createThumbnail.bind(data)(data[source], 64)).thumbnailBase64;
             return data;
         } catch (error) {
-            logger.warn(`Failed to create thumbnail for ${data[source]} in ${data.full_source} (${error})`)
+            hexo.log.warn(`Failed to create thumbnail from \x1b[35m${data[source]}\x1b[39m in \x1b[35m${data.full_source}\x1b[39m (\x1b[31m${error}\x1b[39m)`);
         }
     }
     return data;

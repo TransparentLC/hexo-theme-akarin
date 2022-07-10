@@ -5,10 +5,10 @@ drawer:
             href: /
             icon: home
         关于:
-            href: /about
+            href: /about/
             icon: person
         友链:
-            href: /friend
+            href: /friend/
             icon: link
         归档:
             preset: archive

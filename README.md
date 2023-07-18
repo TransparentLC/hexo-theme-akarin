@@ -263,7 +263,6 @@ scripts:
 | `thumbnail` | 封面图 |  |
 | `thumbnail_webp` | WebP 格式的封面图 |  |
 | `thumbnail_avif` | AVIF 格式的封面图 |  |
-| `thumbnail_jxl` | JPEG XL 格式的封面图 |  |
 | `thumbnail_color` | 封面图未加载时显示的颜色，也可以填入一个图片的 Data URL 或留空以自动生成 |  |
 | `mathjax` | 在文章中加载 MathJax | `false` |
 | `hide_license` | 不显示版权声明 | `false` |
@@ -305,17 +304,16 @@ scripts:
 
 ### 使用现代图片格式和图片渐进式加载
 
-WebP、AVIF、JPEG XL 等现代图片格式具有更好的压缩效率，可以节省流量和加载时间。
+WebP、AVIF 等现代图片格式具有更好的压缩效率，可以节省流量和加载时间。
 
 * 几乎所有的浏览器都[支持](https://caniuse.com/webp) WebP 格式。
 * Firefox 77 和 Chrome 85 及之后的版本[支持](https://caniuse.com/avif) AVIF 格式。
-* 目前各浏览器对 JPEG XL 的[支持](https://caniuse.com/jpegxl)均处于实验状态。
 
 图片渐进式加载是在传统的懒加载的基础上进行的进一步优化，在图片加载前以从原图缩小的模糊缩略图作为占位符，以 Data URL 嵌入到网页上并以原图的尺寸显示，加载完成后再以渐变方式从缩略图过渡到原图（具体的效果可以参见静态站点生成器 Gatsby 的插件 gatsby-image 的 [Blur Up 示例](https://using-gatsby-image.gatsbyjs.org/blur-up/)）。这种加载方式符合用户在等待过程中希望图片逐渐被下载的预期，同时也避免了传统的懒加载使用 1px 空白图片或加载动画作为占位符，在原图加载后由于尺寸不同而引起的网页布局抖动问题。
 
 主题对所有的封面图和文章内的插图都支持现代图片格式的自适应和渐进式加载效果，可以根据浏览器的支持情况来决定加载哪一种格式的图片。
 
-对于封面图，可以在 Front-matter 中通过 `thumbnail_{webp,avif,jxl}` 指定现代图片格式的路径。如果 `thumbnail_color` 留空，则会自动生成一个不超过 64px 的缩略图作为占位符。
+对于封面图，可以在 Front-matter 中通过 `thumbnail_{webp,avif}` 指定现代图片格式的路径。如果 `thumbnail_color` 留空，则会自动生成一个不超过 64px 的缩略图作为占位符。
 
 对于文章内的插图，可以通过以下标签插件指定各格式图片的路径：
 
@@ -324,7 +322,6 @@ WebP、AVIF、JPEG XL 等现代图片格式具有更好的压缩效率，可以�
     src:image.jpg
     webp:image.webp
     avif:image.avif
-    jxl:image.jxl
     alt
     title
 %}

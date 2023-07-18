@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
 
-// Sharp v0.30.7 doesn't support JPEG XL, raises "heif: Invalid input" error while reading AVIF.
+// Sharp v0.32.3 raises "heif: Invalid input" error while reading AVIF.
 
 /** @type {Record<String, [Number, Number, String]>} */
 const thumbnailCache = {};
@@ -22,11 +22,11 @@ hexo.extend.filter.register('before_exit', () => {
 /**
  * @param {String} source
  * @param {Number} size
- * @returns {{
+ * @returns {Promise<{
  *  thumbnailBase64: String,
  *  width: Number,
  *  height: Number,
- * }}
+ * }>}
  */
 const createThumbnail = async (source, size = 32) => {
     const cacheKey = `${source}:${size}`;
@@ -96,8 +96,7 @@ hexo.extend.tag.register(
         /** @type {Record<String, String>} */
         const attrs = {};
         for (const [attr, argPrefix] of [
-            ['data-src-jxl', 'jxl:'],
-            ['data-src-avif', 'avif:'],
+            // ['data-src-avif', 'avif:'],
             ['data-src-webp', 'webp:'],
             ['data-src', 'src:'],
         ]) {
@@ -112,7 +111,7 @@ hexo.extend.tag.register(
 
         for (const format in sources) {
             const source = sources[format];
-            if (!source || format === 'data-src-jxl' || format === 'data-src-avif') continue;
+            if (!source || format === 'data-src-avif') continue;
 
             try {
                 const { thumbnailBase64, width, height } = await createThumbnail(source, 32);
@@ -151,7 +150,6 @@ hexo.extend.filter.register('before_post_render', async data => {
     if (data.thumbnail_color) return data;
 
     for (const source of [
-        // 'thumbnail_jxl',
         // 'thumbnail_avif',
         'thumbnail_webp',
         'thumbnail',

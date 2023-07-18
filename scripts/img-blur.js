@@ -96,7 +96,7 @@ hexo.extend.tag.register(
         /** @type {Record<String, String>} */
         const attrs = {};
         for (const [attr, argPrefix] of [
-            // ['data-src-avif', 'avif:'],
+            ['data-src-avif', 'avif:'],
             ['data-src-webp', 'webp:'],
             ['data-src', 'src:'],
         ]) {

@@ -203,7 +203,6 @@ stats:
 ### 其它设置
 
 ```yaml
-mathjax:
 rss:
 minify:
     enable: true
@@ -222,13 +221,11 @@ scripts:
 
 | 参数 | 描述 | 默认值 |
 | --- | --- | --- |
-| `mathjax` | 加载 MathJax 的路径 | 使用 [jsDelivr 的 CDN](https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js) |
 | `rss` | RSS 的路径，留空则导航菜单中的 `preset:rss` 不会显示 |  |
 | `minify_html` | 对生成的 HTML 进行压缩，参见[“HTML 压缩”](#HTML-压缩)部分 |  |
 | `stylesheets` | 需要导入的其它 CSS|  |
 | `scripts` | 需要导入的其它 JS |  |
 
-* MathJax 体积较大，因此需要在 Front-matter 中单独设定是否加载
 * 可以使用插件 [hexo-generator-feed](https://github.com/hexojs/hexo-generator-feed) 生成 RSS
 * 至少需要导入以下 CSS：
     * [MDUI](https://github.com/zdhxiong/mdui/blob/v1/dist/css/mdui.min.css)
@@ -264,7 +261,6 @@ scripts:
 | `thumbnail_webp` | WebP 格式的封面图 |  |
 | `thumbnail_avif` | AVIF 格式的封面图 |  |
 | `thumbnail_color` | 封面图未加载时显示的颜色，也可以填入一个图片的 Data URL 或留空以自动生成 |  |
-| `mathjax` | 在文章中加载 MathJax | `false` |
 | `hide_license` | 不显示版权声明 | `false` |
 | `license` | 文章的版权声明 | `theme.posts.license` |
 | `comments` | 是否允许评论 | `true` |
@@ -359,4 +355,30 @@ minify_html:
         - application/ld+json
     minifyCSS: true
     minifyJS: true
+```
+
+### MathJax 公式渲染
+
+主题内置了使用 [MathJax](https://www.mathjax.org) 渲染数学公式的功能。如果你正在使用 [hexo-renderer-marked](https://github.com/hexojs/hexo-renderer-marked) 渲染器，则无需额外配置，直接在正文输入公式就可以自动以 SVG 格式渲染了。
+
+**注意：公式与非公式之间必须用空格分隔。**
+
+行内公式：
+
+```md
+$ax^2 + bx + c = 0$
+```
+
+行间公式：
+
+```md
+$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}$$
+
+$$
+    \begin{align}
+        \dot{x} & = \sigma(y-x) \\
+        \dot{y} & = \rho x - y - xz \\
+        \dot{z} & = -\beta z + xy
+    \end{align}
+$$
 ```

@@ -7,19 +7,3 @@
 <% if (theme.stats.busuanzi.enable) { %>
     <script src="<%= theme.stats.busuanzi.script || 'https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js' %>" async></script>
 <% } %>
-
-<% if ((is_post() || is_page()) && page.mathjax) { %>
-    <script>
-        window.MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['(', ')']],
-                processEscapes: true,
-            },
-            options: {
-                ignoreHtmlClass: 'tex2jax_ignore|dno',
-                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            },
-        };
-    </script>
-    <script src="<%= theme.mathjax || 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js' %>" async></script>
-<% } %>

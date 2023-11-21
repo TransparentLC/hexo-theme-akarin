@@ -16,9 +16,16 @@ const textEncoder = new TextEncoder;
 const createAPlayerHTML = aplayerConfig => {
     const aplayerConfigJSON = JSON.stringify(aplayerConfig);
     const id = `aplayer-${fnv1a(textEncoder.encode(aplayerConfigJSON)).toString(16).padStart(8, 0)}`;
+    let noscriptText = '';
+    if (aplayerConfig.audio.title) {
+        noscriptText = `<p><em>♪ ${aplayerConfig.audio.title}` + (aplayerConfig.audio.author ? ` - ${aplayerConfig.audio.author}` : '') + '</em></p>';
+    }
     return `
         <div id="${id}" class="aplayer" style="margin-bottom:20px"></div>
         <script>(window.aplayersLite||(window.aplayersLite=[])).push(${aplayerConfigJSON.replace(/^{/, `{container:document.getElementById('${id}'),`)})</script>
+        <noscript>
+            ${noscriptText}<audio src="${aplayerConfig.audio.url}" controls preload="metadata"></audio>
+        </noscript>
     `;
 };
 

@@ -6,6 +6,15 @@ hexo.extend.filter.register('marked:renderer', renderer => {
             alt="${text}"
             title="${title ? title : (text ? text : '')}"
         >
+        <noscript>
+            <img
+                src="${href}"
+                class="mdui-img-fluid mdui-img-rounded mdui-center mdui-hoverable"
+                alt="${text}"
+                title="${title ? title : (text ? text : '')}"
+            >
+        </noscript>
+
     `;
     renderer.table = (header, body) => `
         <div class="mdui-table-fluid mdui-shadow-0">

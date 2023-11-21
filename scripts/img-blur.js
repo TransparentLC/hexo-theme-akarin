@@ -128,6 +128,12 @@ hexo.extend.tag.register(
                             ${attrs.alt ? `alt="${attrs.alt}" ` : ''}
                             ${attrs.title ? `title="${attrs.title}" ` : ''}
                         >
+                        <noscript>
+                            <img
+                                class="mdui-img-fluid mdui-img-rounded mdui-center mdui-hoverable"
+                                src="${attrs['data-src'] || attrs['data-src-webp'] || attrs['data-src-avif']}" alt="${attrs.alt}" title="${attrs.title}"
+                            >
+                        </noscript>
                     </figure>
                 `;
             } catch (error) {
@@ -139,6 +145,12 @@ hexo.extend.tag.register(
                 class="mdui-img-fluid mdui-img-rounded mdui-center mdui-hoverable"
                 ${Object.entries(attrs).map(([k, v]) => `${k}="${v}"`).join(' ')}
             >
+            <noscript>
+                <img
+                    class="mdui-img-fluid mdui-img-rounded mdui-center mdui-hoverable"
+                    src="${attrs['data-src'] || attrs['data-src-webp'] || attrs['data-src-avif']}" alt="${attrs.alt}" title="${attrs.title}"
+                >
+            </noscript>
         `;
     },
     {

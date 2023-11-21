@@ -296,6 +296,8 @@ scripts:
 %}
 ```
 
+在未启用 JS 的环境下，将使用 HTML 原生 `<audio>` 标签插入播放器，并以形如“♪ TOKIMEKI Runners - 虹ヶ咲学園スクールアイドル同好会”的格式显示歌曲名称。
+
 注意：**这个标签插件的功能和使用方法和 [hexo-tag-aplayer](https://github.com/MoePlayer/hexo-tag-aplayer) 并不相同。** 如果它不能满足你的需求，你仍然可以继续选择使用 hexo-tag-aplayer 插件添加音乐播放器。
 
 ### 使用现代图片格式和图片渐进式加载
@@ -326,6 +328,8 @@ WebP、AVIF 等现代图片格式具有更好的压缩效率，可以节省流�
 `alt` 和 `title` 是可选的。除传统格式 `src` 外，其他的现代图片格式路径不需要全部指定。在生成网页时会自动生成一个不超过 32px 的缩略图作为的占位符。
 
 图片路径可以是本地资源或在线加载的 URL。生成过的缩略图将根据图片路径和缩略图大小而缓存到主题所在目录的 `thumbnail-cache.json` 文件中。
+
+在未启用 JS 的环境下将直接显示图片。
 
 > 由于图片处理库 [sharp](https://sharp.pixelplumbing.com/) 目前暂不支持 JPEG XL，对 AVIF 的支持也存在一些问题，因此目前只会尝试从 WebP 格式和传统格式的图片生成缩略图。
 

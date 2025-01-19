@@ -1,5 +1,5 @@
 <% if (theme.comment.livere.enable && theme.comment.livere.uid) { %>
-    <div id="lv-container" class="mdui-color-white mdui-p-a-3" data-id="city" data-uid="<%= theme.comment.livere.uid %>">
+    <div id="lv-container" class="mdui-color-white mdui-p-x-3 mdui-p-b-3" data-id="city" data-uid="<%= theme.comment.livere.uid %>">
         <script>
             (() => {
                 const script = document.createElement('script');
@@ -9,4 +9,45 @@
             })()
         </script>
     </div>
+<% } %>
+
+<% if (theme.comment.artalk.enable) { %>
+    <div id="artalk-container" class="mdui-typo mdui-p-x-3 mdui-p-b-3" style="box-sizing:border-box"></div>
+    <script>
+        (() => {
+            const t = document.createElement('link');
+            t.rel = 'stylesheet';
+            t.href = '<%= theme.comment.artalk.stylesheet || 'https://cdn.jsdelivr.net/npm/artalk@2/dist/Artalk.css' %>';
+            const s = document.createElement('style');
+            s.innerHTML = [
+                ['red','#ff5252','#ff8a80'],
+                ['pink','#ff4081','#ff80ab'],
+                ['purple','#e040fb','#ea80fc'],
+                ['deep-purple','#7c4dff','#b388ff'],
+                ['indigo','#536dfe','#8c9eff'],
+                ['blue','#448aff','#82b1ff'],
+                ['light-blue','#40c4ff','#80d8ff'],
+                ['cyan','#18ffff','#84ffff'],
+                ['teal','#64ffda','#a7ffeb'],
+                ['green','#69f0ae','#b9f6ca'],
+                ['light-green','#b2ff59','#ccff90'],
+                ['lime','#eeff41','#f4ff81'],
+                ['yellow','#ffff00','#ffff8d'],
+                ['amber','#ffd740','#ffe57f'],
+                ['orange','#ffab40','#ffd180'],
+                ['deep-orange','#ff6e40','#ff9e80'],
+            ].map(([t,m,l]) => `.mdui-theme-accent-${t} .artalk,.mdui-theme-accent-${t} .artalk-layer-wrap,.mdui-theme-accent-${t} .artalk.atk-dark-mode,.mdui-theme-accent-${t} .artalk-layer-wrap.atk-dark-mode{--at-color-main:${m};--at-color-light:${l}}`).join('');
+            const e = document.createElement('script');
+            e.src = '<%= theme.comment.artalk.script || 'https://cdn.jsdelivr.net/npm/artalk@2/dist/Artalk.js' %>';
+            e.async = true;
+            e.onload = () => Artalk.init({
+                el: '#artalk-container',
+                server: '<%= theme.comment.artalk.server %>',
+                site: '<%= theme.comment.artalk.site || config.title %>',
+            });
+            document.head.appendChild(t);
+            document.head.appendChild(s);
+            document.body.appendChild(e);
+        })()
+    </script>
 <% } %>

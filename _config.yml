@@ -67,6 +67,12 @@ comment:
     livere:
         enable: false
         uid:
+    artalk:
+        enable: false
+        server:
+        site:
+        stylesheet:
+        script:
 
 stats:
     busuanzi:

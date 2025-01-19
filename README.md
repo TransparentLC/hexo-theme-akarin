@@ -167,14 +167,25 @@ comment:
     livere:
         enable: false
         uid:
+    artalk:
+        enable: false
+        server:
+        site:
+        stylesheet:
+        script:
 ```
 
 | 参数 | 描述 | 默认值 |
 | --- | --- | --- |
 | `livere.enable` | 是否启用 LiveRe 评论功能 | `false` |
 | `livere.uid` | LiveRe 安装代码中的 `data-uid` 的值 |  |
+| `artalk.enable` | 是否启用 Artalk 评论功能 | `false` |
+| `artalk.server` | Artalk 后端地址 |  |
+| `artalk.site` | 站点名 | `config.title` |
+| `artalk.stylesheet` | 从 CDN 引入 Artalk 的 CSS 的地址 | `https://cdn.jsdelivr.net/npm/artalk@2/dist/Artalk.css` |
+| `artalk.script` | 从 CDN 引入 Artalk 的 JS 的地址 | `https://cdn.jsdelivr.net/npm/artalk@2/dist/Artalk.js` |
 
-暂时只支持 [LiveRe City 版](https://livere.com/)。
+暂时只支持 [LiveRe](https://livere.com/) 和 [Artalk](https://artalk.js.org)。
 
 LiveRe 的评论区在启用深色模式的情况下无法正常显示。
 

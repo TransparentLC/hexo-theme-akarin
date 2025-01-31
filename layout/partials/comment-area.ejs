@@ -19,7 +19,7 @@
             t.rel = 'stylesheet';
             t.href = '<%= theme.comment.artalk.stylesheet || 'https://cdn.jsdelivr.net/npm/artalk@2/dist/Artalk.css' %>';
             const s = document.createElement('style');
-            s.innerHTML = [
+            s.innerHTML = '.atk-comment > .atk-main > .atk-body img:not([atk-emoticon]){max-height:160px}' + [
                 ['red','#ff5252','#ff8a80'],
                 ['pink','#ff4081','#ff80ab'],
                 ['purple','#e040fb','#ea80fc'],
@@ -40,11 +40,21 @@
             const e = document.createElement('script');
             e.src = '<%= theme.comment.artalk.script || 'https://cdn.jsdelivr.net/npm/artalk@2/dist/Artalk.js' %>';
             e.async = true;
-            e.onload = () => Artalk.init({
-                el: '#artalk-container',
-                server: '<%= theme.comment.artalk.server %>',
-                site: '<%= theme.comment.artalk.site || config.title %>',
-            });
+            e.onload = () => {
+                Artalk.use(ctx => ctx.on('list-loaded', () => ctx.getCommentNodes().forEach(e => Array.from(e.getRender().$content.querySelectorAll('img:not([atk-emoticon])')).forEach(e => {
+                    e.classList.add('mdui-img-rounded');
+                    mediumZoom(e, {
+                        margin: 16,
+                        scrollOffset: 8,
+                        background: 'rgba(0,0,0,.85)',
+                    });
+                }))));
+                Artalk.init({
+                    el: '#artalk-container',
+                    server: '<%= theme.comment.artalk.server %>',
+                    site: '<%= theme.comment.artalk.site || config.title %>',
+                });
+            };
             document.head.appendChild(t);
             document.head.appendChild(s);
             document.body.appendChild(e);

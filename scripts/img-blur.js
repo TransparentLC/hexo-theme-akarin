@@ -150,7 +150,9 @@ hexo.extend.tag.register(
             <noscript>
                 <img
                     class="mdui-img-fluid mdui-img-rounded mdui-center mdui-hoverable"
-                    src="${attrs['data-src'] || attrs['data-src-webp'] || attrs['data-src-avif']}" alt="${attrs.alt}" title="${attrs.title}"
+                    src="${attrs['data-src'] || attrs['data-src-webp'] || attrs['data-src-avif']}"
+                    ${attrs.alt ? `alt="${attrs.alt}" ` : ''}
+                    ${attrs.title ? `title="${attrs.title}" ` : ''}
                 >
             </noscript>
         `;

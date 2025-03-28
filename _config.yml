@@ -101,3 +101,7 @@ scripts:
 - /js/medium-zoom.min.js
 - /js/APlayer.min.js
 - /js/script.js
+
+preconnect:
+
+dns_prefetch:

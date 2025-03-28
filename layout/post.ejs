@@ -45,7 +45,7 @@
     </div>
     <div class="mdui-card-header mdui-valign">
         <div>
-            <img class="mdui-card-header-avatar akarin-hover-spin" src="<%= page.avatar || theme.uiux.avatar %>">
+            <img class="mdui-card-header-avatar akarin-hover-spin" src="<%= page.avatar || theme.uiux.avatar %>" alt="<%= page.author || config.author %> 的头像">
             <div class="mdui-card-header-title"><%= page.author || config.author %></div>
             <div class="mdui-card-header-subtitle"><%= date(page.date, 'YYYY-MM-DD HH:mm:ss') %></div>
         </div>

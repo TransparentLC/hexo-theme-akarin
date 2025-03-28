@@ -56,13 +56,13 @@
                 logo: theme.head.high_res_favicon,
             },
             keywords: (theme.head.keywords ? [theme.head.keywords] : []).concat(page.tags ? page.tags.data.map(e => e.name) : []).join(','),
-            description: page.description || strip_html(page.excerpt) || config.description,
+            description: strip_html(page.excerpt) || truncate(strip_html(page.content), { length: theme.posts.default_excerpt }),
         })
     %></script>
 
     <meta property="og:site_name" content="<%= config.title %>">
     <meta property="og:title" content="<%= page.title %>">
-    <meta property="og:description" content="<%= page.description || strip_html(page.excerpt) || config.description %>">
+    <meta property="og:description" content="<%= strip_html(page.excerpt) || truncate(strip_html(page.content), { length: theme.posts.default_excerpt }) %>">
     <meta property="og:type" content="article">
     <meta property="og:url" content="<%= page.permalink %>">
     <meta property="og:image" content="<%= page.thumbnail || page.avatar || theme.uiux.avatar %>">

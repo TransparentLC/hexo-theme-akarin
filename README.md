@@ -228,6 +228,10 @@ scripts:
 - /js/medium-zoom.min.js
 - /js/APlayer.min.js
 - /js/script.js
+preconnect:
+- https://cdn.jsdelivr.net
+dns_prefetch:
+- https://example.com
 ```
 
 | 参数 | 描述 | 默认值 |
@@ -236,6 +240,8 @@ scripts:
 | `minify_html` | 对生成的 HTML 进行压缩，参见[“HTML 压缩”](#HTML-压缩)部分 |  |
 | `stylesheets` | 需要导入的其它 CSS|  |
 | `scripts` | 需要导入的其它 JS |  |
+| `preconnect` | 需要添加 `<link rel="preconnect">` 的域名 |  |
+| `dns_prefetch` | 需要添加 `<link rel="dns-prefetch">` 的域名 |  |
 
 * 可以使用插件 [hexo-generator-feed](https://github.com/hexojs/hexo-generator-feed) 生成 RSS
 * 至少需要导入以下 CSS：
@@ -251,7 +257,7 @@ scripts:
     * APlayer 的 [JS 文件](https://github.com/DIYgod/APlayer/blob/master/dist/APlayer.min.js)（如果你需要使用内置的 APlayer 标签插件，后述）
     * 本主题的 [JS 文件](https://github.com/TransparentLC/hexo-theme-akarin/blob/master/source/js/script.js)
 * 如果对加载速度有更高的要求，可以尝试以下方法：
-    * 将主题的 CSS 和 JS 文件进行 minify，相关工具：[Terser](https://xem.github.io/terser-online/)、[clean-css](https://jakubpawlowicz.github.io/clean-css/)
+    * 将主题的 CSS 和 JS 文件进行 minify，相关工具：[Terser](https://try.terser.org/)、[clean-css](https://jakubpawlowicz.github.io/clean-css/)
     * 使用 [jsDelivr](https://www.jsdelivr.com/) 等公共 CDN 服务
     * 对于 jsDelivr，可以使用[合并文件](https://www.jsdelivr.com/features#combine)功能，减少网络请求数并提高压缩比，还可以在文件名中加上 `min` 自动 minify
     * 下载 MDUI 的源代码，根据主题配置中设定的主题色和强调色（`theme.uiux.mdui_primary/accent_theme`），去除不需要的主题和组件后自行编译 CSS 和 JS，替换主题自带的完整版。可以参考这里修改源代码 src 目录下的对应文件：[index.ts](https://pastebin.com/VZGCd2pf)、[index.less](https://pastebin.com/bLy8SxRM)

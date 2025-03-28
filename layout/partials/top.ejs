@@ -3,7 +3,7 @@
         <picture id="akarin-top" title="返回顶部">
             <source srcset="<%= url_for('/img/top.avif') %>" type="image/avif">
             <source srcset="<%= url_for('/img/top.webp') %>" type="image/webp">
-            <img src="<%= url_for('/img/top.png') %>">
+            <img src="<%= url_for('/img/top.png') %>" alt="返回顶部">
         </picture>
     <% } else if (theme.uiux.top.style === 'fab') { %>
         <button

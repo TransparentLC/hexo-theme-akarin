@@ -78,3 +78,10 @@ hexo.extend.tag.register(
         ends: true,
     },
 );
+
+hexo.extend.filter.register('after_render:html', (str, data) => {
+    if (str.includes('<script>(window.aplayersLite||(window.aplayersLite=[])).push')) {
+        str = str.replace(/<!-- aplayer: ([\s\S]+?) -->/g, '$1');
+    }
+    return str;
+});

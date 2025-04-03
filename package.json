@@ -4,6 +4,7 @@
   },
   "dependencies": {
     "html-minifier-terser": "^7.2.0",
+    "lightningcss": "^1.29.3",
     "mathjax": "^3.2.2",
     "sharp": "^0.33.5"
   }

@@ -32,13 +32,17 @@ head:
 
 footer:
     since:
-    text: Hosted by <a href="https://pages.github.com/" target="_blank">Github Pages</a>
+    text: Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
 
 uiux:
     slogan: This is a slogan.
-    sidebar_image: https://picsum.photos/600/400.webp?blur=10
+    sidebar_image: https://picsum.photos/600/400.jpg?blur=10
+    sidebar_image_webp: https://picsum.photos/600/400.webp?blur=10
+    sidebar_image_avif:
     sidebar_image_color: '#e16b8c'
-    banner_image: https://picsum.photos/1200/500.webp
+    banner_image: https://picsum.photos/1200/500.jpg
+    banner_image_webp: https://picsum.photos/1200/500.webp
+    banner_image_avif:
     banner_image_color: '#e16b8c'
     avatar: https://picsum.photos/200/200.webp
     mdui_primary_theme: pink
@@ -89,17 +93,19 @@ rss:
 minify_html:
     enable: true
 
+aplayer:
+    script: /js/APlayer.min.js
+    stylesheet: /css/APlayer.min.css
+
 stylesheets:
 - /css/mdui.min.css
 - /css/prism-line-numbers.min.css
 - /css/prism-vsc-dark-plus.min.css
-- /css/APlayer.min.css
 - /css/style.css
 
 scripts:
 - /js/mdui.min.js
 - /js/medium-zoom.min.js
-- /js/APlayer.min.js
 - /js/script.js
 
 preconnect:

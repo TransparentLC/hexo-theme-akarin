@@ -15,8 +15,6 @@ consoleBadge('Project', 'hexo-theme-akarin', '#07c');
 consoleBadge('Author', 'TransparentLC', '#f84');
 consoleBadge('Source', 'https://github.com/TransparentLC/hexo-theme-akarin', '#4b1');
 
-window.APlayer && Array.isArray(window.aplayersLite) && (aplayersLite = aplayersLite.map(e => new APlayer(e)));
-
 // ****************
 // 懒加载组件
 // ****************
@@ -32,7 +30,7 @@ class LazyLoad {
         }),
         Object.freeze({
             type: 'avif',
-            img: 'data:image/avif;base64,AAAAHGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZgAAAPJtZXRhAAAAAAAAAChoZGxyAAAAAAAAAABwaWN0AAAAAAAAAAAAAAAAbGliYXZpZgAAAAAOcGl0bQAAAAAAAQAAAB5pbG9jAAAAAEQAAAEAAQAAAAEAAAEWAAAAFAAAAChpaW5mAAAAAAABAAAAGmluZmUCAAAAAAEAAGF2MDFDb2xvcgAAAABqaXBycAAAAEtpcGNvAAAAFGlzcGUAAAAAAAAAAQAAAAEAAAAQcGl4aQAAAAADCAgIAAAADGF2MUOBTQgAAAAAE2NvbHJuY2x4AAIAAgACgAAAABdpcG1hAAAAAAAAAAEAAQQBAoMEAAAAHG1kYXQSAAoFWAAOxIAyCRAAAAAP+I9ngg',
+            img: 'data:image/avif;base64,AAAAHGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZgAAAOltZXRhAAAAAAAAACFoZGxyAAAAAAAAAABwaWN0AAAAAAAAAAAAAAAAAAAAAA5waXRtAAAAAAABAAAAHmlsb2MAAAAARAAAAQABAAAAAQAAAQ0AAAAVAAAAKGlpbmYAAAAAAAEAAAAaaW5mZQIAAAAAAQAAYXYwMUNvbG9yAAAAAGhpcHJwAAAASWlwY28AAAAUaXNwZQAAAAAAAAABAAAAAQAAAA5waXhpAAAAAAEIAAAADGF2MUOBABwAAAAAE2NvbHJuY2x4AAEADQAGgAAAABdpcG1hAAAAAAAAAAEAAQQBAoMEAAAAHW1kYXQSAAoHGAAOWAhoNTIIH/AAAQACH0A',
             mask: 1 << 1,
         }),
         Object.freeze({
@@ -212,8 +210,12 @@ if (currentDark) currentDark.classList.add('mdui-list-item-active');
 // ****************
 (() => {
 
-// 点击主页的封面图也能打开文章
-Array.from(document.querySelectorAll('[data-entry]')).forEach(e => e.parentElement.previousElementSibling.onclick = () => location.href = e.href);
+// 点击主页的封面图也能打开文章，并且添加预加载
+Array.from(document.querySelectorAll('[data-entry]')).forEach(e => {
+    const el = e.parentElement.previousElementSibling;
+    el.onclick = () => location.href = e.href;
+    if (window.preload) el.addEventListener('mouseover', () => !_preloadedList.has(e.href) && setTimeout(() => preload(e.href), 8 * _delayOnHover));
+});
 
 const article = document.querySelector('article');
 if (!article) return;

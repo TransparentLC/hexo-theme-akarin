@@ -48,6 +48,7 @@ keywords = keywords.join(',');
     <% if (theme.rss) { %>
         <link rel="alternate" type="application/atom+xml" href="<%= theme.rss %>">
     <% } %>
+
     <% if (Array.isArray(theme.preconnect)) { %>
         <% theme.preconnect.forEach(domain => { %>
             <link rel="preconnect" href="<%= domain %>" crossorigin>
@@ -58,6 +59,24 @@ keywords = keywords.join(',');
             <link rel="dns-prefetch" href="<%= domain %>">
         <% }); %>
     <% } %>
+    <% if (theme.uiux.sidebar_image_avif) { %>
+        <link rel="preload" href="<%= theme.uiux.sidebar_image_avif %>" as="image">
+    <% } else if (theme.uiux.sidebar_image_webp) { %>
+        <link rel="preload" href="<%= theme.uiux.sidebar_image_webp %>" as="image">
+    <% } else { %>
+        <link rel="preload" href="<%= theme.uiux.sidebar_image %>" as="image">
+    <% } %>
+    <% if (is_home() && page.current === 1) { %>
+        <% if (theme.uiux.banner_image_avif) { %>
+            <link rel="preload" href="<%= theme.uiux.banner_image_avif %>" as="image">
+        <% } else if (theme.uiux.banner_image_webp) { %>
+            <link rel="preload" href="<%= theme.uiux.banner_image_webp %>" as="image">
+        <% } else { %>
+            <link rel="preload" href="<%= theme.uiux.banner_image %>" as="image">
+        <% } %>
+    <% } %>
+    <link rel="preload" href="<%= theme.uiux.avatar %>" as="image">
+
     <title><%= pageTitle %></title>
 
     <% if (theme.head.structured_data) { %>
@@ -65,6 +84,7 @@ keywords = keywords.join(',');
     <% } %>
 
     <script>document.documentMode && (location.href = '<%= url_for('/upgrade-browser.html') %>')</script>
+
     <!-- 导入CSS -->
     <%- partial('partials/import-css.ejs') %>
 </head>

@@ -1,9 +1,16 @@
 <% if (theme.scripts) { %>
-    <% theme.scripts.forEach(url => { %>
-        <%- ['http://', 'https://', '//'].find(e => url.startsWith(e)) ? `<script src="${url}"></script>` : js(url) %>
-    <% }); %>
+    <%- js(theme.scripts) %>
+<% } %>
+
+<% if (theme.aplayer.script) { %>
+    <!-- aplayer: <%- js({ src: theme.aplayer.script, async: true, onload: 'Array.isArray(window.aplayersLite)&&(aplayersLite = aplayersLite.map(e => new APlayer(e)))' }) %> -->
 <% } %>
 
 <% if (theme.stats.busuanzi.enable) { %>
-    <script src="<%= theme.stats.busuanzi.script || 'https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js' %>" async></script>
+    <%-
+        js({
+            src: theme.stats.busuanzi.script || 'https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js',
+            async: true,
+        })
+    %>
 <% } %>

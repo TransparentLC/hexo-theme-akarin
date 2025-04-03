@@ -1,18 +1,39 @@
 <% if (theme.stylesheets) { %>
-    <% theme.stylesheets.forEach(url => { %>
-        <%- (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('//')) ? `<link href="${url}" rel="stylesheet">` : css(url) %>
-    <% }); %>
+    <%- css(theme.stylesheets) %>
+<% } %>
+
+<% if (theme.aplayer.stylesheet) { %>
+    <!-- aplayer: <%- async_css(theme.aplayer.stylesheet) %> -->
 <% } %>
 
 <style>
     * {
         --sidebar-image: url(<%= theme.uiux.sidebar_image %>);
+        --sidebar-image: image-set(
+            <% if (theme.uiux.sidebar_image_avif) { %>
+                "<%= theme.uiux.sidebar_image_avif %>" type("image/avif"),
+            <% } %>
+            <% if (theme.uiux.sidebar_image_webp) { %>
+                "<%= theme.uiux.sidebar_image_webp %>" type("image/webp"),
+            <% } %>
+            url(<%= theme.uiux.sidebar_image %>)
+        );
         --sidebar-image-color: <%=theme.uiux.sidebar_image_color %>;
         --banner-image: url(<%= theme.uiux.banner_image %>);
+        --banner-image: image-set(
+            <% if (theme.uiux.banner_image_avif) { %>
+                "<%= theme.uiux.banner_image_avif %>" type("image/avif"),
+            <% } %>
+            <% if (theme.uiux.banner_image_webp) { %>
+                "<%= theme.uiux.banner_image_webp %>" type("image/webp"),
+            <% } %>
+            url(<%= theme.uiux.banner_image %>)
+        );
         --banner-image-color: <%=theme.uiux.banner_image_color %>;
         --post-thumbnail-color: <%=theme.uiux.post_thumbnail_color %>;
         --copy-code-btn-color: <%=theme.uiux.copy_code_button_color %>;
     }
+
     .MathJax[jax=SVG][display=true] {
         display: block;
         text-align: center;

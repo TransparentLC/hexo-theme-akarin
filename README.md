@@ -87,10 +87,13 @@ footer:
 ```yaml
 uiux:
     slogan: This is a slogan.
-    avatar: https://picsum.photos/200/200.webp
-    sidebar_image: https://picsum.photos/600/400.webp?blur=10
+    sidebar_image: https://picsum.photos/600/400.jpg?blur=10
+    sidebar_image_webp: https://picsum.photos/600/400.webp?blur=10
+    sidebar_image_avif:
     sidebar_image_color: '#e16b8c'
-    banner_image: https://picsum.photos/1200/500.webp
+    banner_image: https://picsum.photos/1200/500.jpg
+    banner_image_webp: https://picsum.photos/1200/500.webp
+    banner_image_avif:
     banner_image_color: '#e16b8c'
     mdui_primary_theme: pink
     mdui_accent_theme: pink
@@ -106,8 +109,12 @@ uiux:
 | `slogan` | 显示在主页顶部的标语，可以使用数组设定多行标语 |  |
 | `avatar` | 头像的 URL |  |
 | `sidebar_image` | 导航菜单顶部的背景图 URL |  |
+| `sidebar_image_webp` | WebP 格式的导航菜单顶部的背景图 URL |  |
+| `sidebar_image_avif` | AVIF 格式的导航菜单顶部的背景图 URL |  |
 | `sidebar_image_color` | 背景图未加载时显示的颜色，可以使用各种在线小工具提取上面设置的图片的主题色 |  |
 | `banner_image` | 主页顶部的背景图 URL |  |
+| `banner_image_webp` | WebP 格式的主页顶部的背景图 URL |  |
+| `banner_image_avif` | AVIF 格式的主页顶部的背景图 URL |  |
 | `banner_image_color` | 背景图未加载时显示的颜色 |  |
 | `mdui_primary_theme` | MDUI 的主题色，参见[这里](https://www.mdui.org/docs/color#color) |  |
 | `mdui_accent_theme` | MDUI 的强调色 |  |
@@ -217,6 +224,9 @@ stats:
 rss:
 minify:
     enable: true
+aplayer:
+    script: /js/APlayer.min.js
+    stylesheet: /css/APlayer.min.css
 stylesheets:
 - /css/mdui.min.css
 - /css/prism-line-numbers.min.css
@@ -237,9 +247,10 @@ dns_prefetch:
 | 参数 | 描述 | 默认值 |
 | --- | --- | --- |
 | `rss` | RSS 的路径，留空则导航菜单中的 `preset:rss` 不会显示 |  |
-| `minify_html` | 对生成的 HTML 进行压缩，参见[“HTML 压缩”](#HTML-压缩)部分 |  |
-| `stylesheets` | 需要导入的其它 CSS|  |
-| `scripts` | 需要导入的其它 JS |  |
+| `minify_html` | 对生成的 HTML 进行压缩，参见[“HTML 压缩”](#html-压缩)部分 |  |
+| `aplayer` | [APlayer](https://github.com/DIYgod/APlayer) 使用的 CSS 和 JS，参见[“APlayer 标签插件”](#aplayer-标签插件)部分 |  |
+| `stylesheets` | 需要导入的其它 CSS，和 Hexo 的辅助函数 [`css`](https://hexo.io/zh-cn/docs/helpers#css) 相同 |  |
+| `scripts` | 需要导入的其它 JS，和 Hexo 的辅助函数 [`js`](https://hexo.io/zh-cn/docs/helpers#js) 相同 |  |
 | `preconnect` | 需要添加 `<link rel="preconnect">` 的域名 |  |
 | `dns_prefetch` | 需要添加 `<link rel="dns-prefetch">` 的域名 |  |
 
@@ -257,7 +268,7 @@ dns_prefetch:
     * APlayer 的 [JS 文件](https://github.com/DIYgod/APlayer/blob/master/dist/APlayer.min.js)（如果你需要使用内置的 APlayer 标签插件，后述）
     * 本主题的 [JS 文件](https://github.com/TransparentLC/hexo-theme-akarin/blob/master/source/js/script.js)
 * 如果对加载速度有更高的要求，可以尝试以下方法：
-    * 将主题的 CSS 和 JS 文件进行 minify，相关工具：[Terser](https://try.terser.org/)、[clean-css](https://jakubpawlowicz.github.io/clean-css/)
+    * 将主题的 CSS 和 JS 文件进行 minify，相关工具：[Terser](https://try.terser.org/)、[lightningcss](https://lightningcss.dev/)
     * 使用 [jsDelivr](https://www.jsdelivr.com/) 等公共 CDN 服务
     * 对于 jsDelivr，可以使用[合并文件](https://www.jsdelivr.com/features#combine)功能，减少网络请求数并提高压缩比，还可以在文件名中加上 `min` 自动 minify
     * 下载 MDUI 的源代码，根据主题配置中设定的主题色和强调色（`theme.uiux.mdui_primary/accent_theme`），去除不需要的主题和组件后自行编译 CSS 和 JS，替换主题自带的完整版。可以参考这里修改源代码 src 目录下的对应文件：[index.ts](https://pastebin.com/VZGCd2pf)、[index.less](https://pastebin.com/bLy8SxRM)

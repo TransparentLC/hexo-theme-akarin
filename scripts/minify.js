@@ -1,4 +1,8 @@
 const htmlMinifier = require('html-minifier-terser');
+const lightningcss = require('lightningcss');
+
+const encoder = new TextEncoder;
+const decoder = new TextDecoder;
 
 hexo.extend.filter.register('after_render:html', async (str, data) => {
     if (!hexo.theme.config.minify_html.enable) return str;
@@ -18,7 +22,38 @@ hexo.extend.filter.register('after_render:html', async (str, data) => {
         processScripts: [
             'application/ld+json',
         ],
-        minifyCSS: true,
+        /**
+         * @param {String} text
+         * @param {'inline' | 'media' | undefined} type
+         * @returns {String}
+         */
+        minifyCSS: (text, type) => {
+            // function wrapCSS(text, type)
+            // https://github.com/terser/html-minifier-terser/blob/c4a7ae0bd08b1a438d9ca12a229b4cbe93fc016a/src/htmlminifier.js#L355
+            switch (type) {
+                case 'inline':
+                    text = `*{${text}}`;
+                    break;
+                case 'media':
+                    text = `@media ${text}{a{top:0}}`;
+                    break;
+            }
+            const minified = decoder.decode(lightningcss.transform({ code: encoder.encode(text), minify: true }).code);
+            // function unwrapCSS(text, type)
+            // https://github.com/terser/html-minifier-terser/blob/c4a7ae0bd08b1a438d9ca12a229b4cbe93fc016a/src/htmlminifier.js#L366
+            /** @type {RegExpMatchArray | null} */
+            let m;
+            switch (type) {
+                case 'inline':
+                    m = minified.match(/^\*\{([\s\S]*)\}$/);
+                    return m ? m[1] : minified;
+                case 'media':
+                    m = minified.match(/^@media ([\s\S]*?)\s*{[\s\S]*}$/);
+                    return m ? m[1] : minified;
+                default:
+                    return minified;
+            }
+        },
         minifyJS: true,
         ...hexo.theme.config.minify_html,
     });

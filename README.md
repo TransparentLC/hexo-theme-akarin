@@ -259,16 +259,14 @@ dns_prefetch:
     * [MDUI](https://github.com/zdhxiong/mdui/blob/v1/dist/css/mdui.min.css)
     * PrismJS 的任意一个[主题](https://github.com/PrismJS/prism-themes)（如果使用了 PrismJS）
     * PrismJS 的[行号显示插件](https://github.com/PrismJS/prism/blob/master/plugins/line-numbers/prism-line-numbers.css)（如果使用了行号显示功能）
-    * APlayer 的 [CSS 文件](https://github.com/DIYgod/APlayer/blob/master/dist/APlayer.min.css)（如果你需要使用内置的 APlayer 标签插件，后述）
     * 本主题的 [CSS 文件](https://github.com/TransparentLC/hexo-theme-akarin/blob/master/source/css/style.css)
 * 至少需要导入以下 JS：
     * [MDUI](https://github.com/zdhxiong/mdui/blob/v1/dist/js/mdui.min.js)
     * [medium-zoom](https://github.com/francoischalifour/medium-zoom#installation)
     * PrismJS 本体和各个插件，参见 [Hexo 文档](https://hexo.io/zh-cn/docs/syntax-highlight.html#preprocess)（如果使用了浏览器端高亮）
-    * APlayer 的 [JS 文件](https://github.com/DIYgod/APlayer/blob/master/dist/APlayer.min.js)（如果你需要使用内置的 APlayer 标签插件，后述）
     * 本主题的 [JS 文件](https://github.com/TransparentLC/hexo-theme-akarin/blob/master/source/js/script.js)
 * 如果对加载速度有更高的要求，可以尝试以下方法：
-    * 将主题的 CSS 和 JS 文件进行 minify，相关工具：[Terser](https://try.terser.org/)、[lightningcss](https://lightningcss.dev/)
+    * 将主题的 CSS 和 JS 文件进行 minify，相关工具：[Terser](https://try.terser.org/)、[swc](https://swc.rs/)、[lightningcss](https://lightningcss.dev/)
     * 使用 [jsDelivr](https://www.jsdelivr.com/) 等公共 CDN 服务
     * 对于 jsDelivr，可以使用[合并文件](https://www.jsdelivr.com/features#combine)功能，减少网络请求数并提高压缩比，还可以在文件名中加上 `min` 自动 minify
     * 下载 MDUI 的源代码，根据主题配置中设定的主题色和强调色（`theme.uiux.mdui_primary/accent_theme`），去除不需要的主题和组件后自行编译 CSS 和 JS，替换主题自带的完整版。可以参考这里修改源代码 src 目录下的对应文件：[index.ts](https://pastebin.com/VZGCd2pf)、[index.less](https://pastebin.com/bLy8SxRM)

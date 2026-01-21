@@ -2,11 +2,31 @@ const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
 
-// Sharp v0.32.3 raises "heif: Invalid input" error while reading AVIF.
+// Sharp v0.32.3 raises "heif: Invalid input" error while reading 10-bit AVIF.
+// AVIF: "Error: source: bad seek to ..." with 0.28.1 · Issue #2688 · lovell/sharp
+// https://github.com/lovell/sharp/issues/2688
+// Experiment: consider switching from aom to dav1d+rav1e/svt-av1 · Issue #97 · lovell/sharp-libvips
+// https://github.com/lovell/sharp-libvips/issues/97
 
 /** @type {Record<String, [Number, Number, String]>} */
 const thumbnailCache = {};
 const thumbnailCachePath = path.join(hexo.theme_dir, 'thumbnail-cache.json');
+
+const thumbnailStats = {
+    min: Infinity,
+    max: 0,
+    total: 0,
+    count: 0,
+};
+/**
+ * @param {Number} size
+ */
+const thumbnailStatsUpdate = size => {
+    thumbnailStats.count++;
+    thumbnailStats.total += size;
+    if (size < thumbnailStats.min) thumbnailStats.min = size;
+    if (size > thumbnailStats.max) thumbnailStats.max = size;
+};
 
 hexo.log.debug(`Thumbnail cache path: \x1b[35m${thumbnailCachePath}\x1b[39m`);
 
@@ -17,6 +37,7 @@ hexo.extend.filter.register('after_init', () => {
 
 hexo.extend.filter.register('before_exit', () => {
     fs.writeFileSync(thumbnailCachePath, JSON.stringify(thumbnailCache));
+    hexo.log.debug(`Thumbnail stats: min \x1b[36m${thumbnailStats.min}\x1b[39m bytes, max \x1b[36m${thumbnailStats.max}\x1b[39m bytes, avg \x1b[36m${thumbnailStats.total / thumbnailStats.count}\x1b[39m bytes`);
 });
 
 /**
@@ -28,11 +49,12 @@ hexo.extend.filter.register('before_exit', () => {
  *  height: Number,
  * }>}
  */
-const createThumbnail = async (source, size = 32) => {
+const createThumbnail = async (source, size) => {
     const cacheKey = `${source}:${size}`;
     if (cacheKey in thumbnailCache) {
         const [thumbnailBase64, width, height] = thumbnailCache[cacheKey];
         hexo.log.debug(`Thumbnail loaded from cache: \x1b[35m${cacheKey}\x1b[39m (\x1b[36m${thumbnailBase64.length}\x1b[39m bytes)`);
+        thumbnailStatsUpdate(thumbnailBase64.length);
         return {
             thumbnailBase64,
             width,
@@ -51,7 +73,7 @@ const createThumbnail = async (source, size = 32) => {
     } else {
         input = path.join(hexo.source_dir, source);
     }
-    const image = sharp(input);
+    const image = sharp(input, { animated: false });
     const { width, height, hasAlpha } = await image.metadata();
     const thumbnail = image.resize(
         width >= height ? Math.min(size, width) : null,
@@ -59,24 +81,24 @@ const createThumbnail = async (source, size = 32) => {
     );
     let thumbnailBase64;
     if (hasAlpha) {
-        thumbnailBase64 = 'data:image/png;base64,' + (await thumbnail.png({
-            palette: true,
+        thumbnailBase64 = 'data:image/webp;base64,' + (await thumbnail.webp({
+            nearLossless: true,
             quality: 100,
-            colors: 128,
-            compressionLevel: 9,
-            effort: 10,
+            smartSubsample: true,
+            smartDeblock: true,
+            effort: 6,
         }).toBuffer()).toString('base64').replace(/=+$/, '');
     } else {
-        thumbnailBase64 = 'data:image/jpeg;base64,' + (await image.jpeg({
-            quality: 75,
-            chromaSubsampling: '4:2:0',
-            quantisationTable: 3,
-            trellisQuantisation: true,
-            overshootDeringing: true,
+        thumbnailBase64 = 'data:image/webp;base64,' + (await image.webp({
+            quality: 60,
+            smartSubsample: true,
+            smartDeblock: true,
+            effort: 6,
         }).toBuffer()).toString('base64').replace(/=+$/, '');
     }
     thumbnailCache[cacheKey] = [thumbnailBase64, width, height];
     hexo.log.debug(`Thumbnail created: \x1b[35m${cacheKey}\x1b[39m (\x1b[36m${thumbnailBase64.length}\x1b[39m bytes)`);
+    thumbnailStatsUpdate(thumbnailBase64.length);
     return {
         thumbnailBase64,
         width,

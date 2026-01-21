@@ -1,11 +1,11 @@
 <div class="mdui-valign mdui-m-t-2">
     <% if (page.prev) { %>
         <a href="<%= url_for(is_post() ? page.prev.path : page.prev_link) %>" class="mdui-btn mdui-btn-icon mdui-ripple">
-            <i class="mdui-icon material-icons">chevron_left</i>
+            <span class="mdui-icon material-icons"><%- svg_icon('mdi:chevron-left') %></span>
         </a>
     <% } else { %>
         <button class="mdui-btn mdui-btn-icon mdui-ripple" disabled>
-            <i class="mdui-icon material-icons">chevron_left</i>
+            <span class="mdui-icon material-icons"><%- svg_icon('mdi:chevron-left') %></span>
         </button>
     <% } %>
     <% if (is_post() && page.prev) { %>
@@ -24,11 +24,11 @@
 
     <% if (page.next) { %>
         <a href="<%= url_for(is_post() ? page.next.path : page.next_link) %>" class="mdui-btn mdui-btn-icon mdui-ripple">
-            <i class="mdui-icon material-icons">chevron_right</i>
+            <span class="mdui-icon material-icons"><%- svg_icon('mdi:chevron-right') %></span>
         </a>
     <% } else { %>
         <button class="mdui-btn mdui-btn-icon mdui-ripple" disabled>
-            <i class="mdui-icon material-icons">chevron_right</i>
+            <span class="mdui-icon material-icons"><%- svg_icon('mdi:chevron-right') %></span>
         </button>
     <% } %>
 </div>

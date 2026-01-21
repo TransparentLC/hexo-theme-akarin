@@ -2,7 +2,7 @@
 
 基于 [MDUI](https://www.mdui.org/) 制作，借鉴了 [hexo-theme-material](https://github.com/bolnh/hexo-theme-material) 的样式的自制 Material Design 风格主题。
 
-演示：https://akarin.dev
+演示：https://akarin.dev/
 
 这个主题不支持 Internet Explorer。
 
@@ -10,9 +10,7 @@
 
 > 以下的“网站配置”指的是 Hexo 博客目录下的 `_config.yml`，“主题配置”指的是 `theme/hexo-theme-akarin` 目录下的 `_config.yml`（也可以将这一文件以 `_config.hexo-theme-akarin.yml` 的名称放在 Hexo 博客目录）。
 
-安装 Node.js 18 和 [Hexo 6](https://hexo.io/zh-cn/docs/#%E5%AE%89%E8%A3%85)（或以上版本）并成功[建站](https://hexo.io/zh-cn/docs/setup)后，将主题下载到 `theme/hexo-theme-akarin` 目录，执行 `npm install` 安装依赖，然后在网站配置中修改 `theme: hexo-theme-akarin` 即可启用主题。
-
-仅支持使用 Hexo 5 添加的 [PrismJS](https://hexo.io/zh-cn/docs/syntax-highlight.html#PrismJS) 进行代码高亮，未支持 Highlight.js。
+安装 Node.js 24 和 [Hexo 8](https://hexo.io/zh-cn/docs/)（或以上版本）并成功[建站](https://hexo.io/zh-cn/docs/setup)后，将主题下载到 `theme/hexo-theme-akarin` 目录，执行 `npm install` 安装依赖，然后在网站配置中修改 `theme: hexo-theme-akarin` 即可启用主题。
 
 ### 导航菜单
 
@@ -37,10 +35,11 @@ drawer:
 | `menu` | 菜单中的项目，显示的文本为每一项的 key |  |
 | `menu.key.preset` | 预设的菜单项目，设置了这一项就不需要设置 `href` 和 `icon` |  |
 | `menu.key.href` | 指向的链接 |  |
-| `menu.key.icon` | 图标，可以在[这里](https://www.mdui.org/docs/material_icon)选择 |  |
+| `menu.key.icon` | 图标，可以使用 [`@mdi/js`](https://pictogrammers.com/library/mdi/) 的图标（`mdi:home`）或直接输入 SVG `<path>`（`path:M12,2A10,10 0 0,0 2,12...`） |  |
 | `menu.key.divider` | 在项目下方添加一条分割线 | `false` |
 
 使用 `preset` 可以设置的预设项目：
+
 * `archive`：点击后跳转到归档页面 `/archive`，并在右侧显示文章总数
 * `rss`：点击后跳转到主题设置里设定的 RSS 链接
 * `dark`：是否启用深色模式的设置，可以设为固定启用/禁用/根据系统主题切换
@@ -229,8 +228,6 @@ aplayer:
     stylesheet: /css/APlayer.min.css
 stylesheets:
 - /css/mdui.min.css
-- /css/prism-line-numbers.min.css
-- /css/prism-vsc-dark-plus.min.css
 - /css/APlayer.min.css
 - /css/style.css
 scripts:
@@ -248,7 +245,7 @@ dns_prefetch:
 | --- | --- | --- |
 | `rss` | RSS 的路径，留空则导航菜单中的 `preset:rss` 不会显示 |  |
 | `minify_html` | 对生成的 HTML 进行压缩，参见[“HTML 压缩”](#html-压缩)部分 |  |
-| `aplayer` | [APlayer](https://github.com/DIYgod/APlayer) 使用的 CSS 和 JS，参见[“APlayer 标签插件”](#aplayer-标签插件)部分 |  |
+| `aplayer` | [aplayer-ts](https://github.com/liuly0322/aplayer-ts) 使用的 CSS 和 JS，参见[“APlayer 标签插件”](#aplayer-标签插件)部分 |  |
 | `stylesheets` | 需要导入的其它 CSS，和 Hexo 的辅助函数 [`css`](https://hexo.io/zh-cn/docs/helpers#css) 相同 |  |
 | `scripts` | 需要导入的其它 JS，和 Hexo 的辅助函数 [`js`](https://hexo.io/zh-cn/docs/helpers#js) 相同 |  |
 | `preconnect` | 需要添加 `<link rel="preconnect">` 的域名 |  |
@@ -257,13 +254,10 @@ dns_prefetch:
 * 可以使用插件 [hexo-generator-feed](https://github.com/hexojs/hexo-generator-feed) 生成 RSS
 * 至少需要导入以下 CSS：
     * [MDUI](https://github.com/zdhxiong/mdui/blob/v1/dist/css/mdui.min.css)
-    * PrismJS 的任意一个[主题](https://github.com/PrismJS/prism-themes)（如果使用了 PrismJS）
-    * PrismJS 的[行号显示插件](https://github.com/PrismJS/prism/blob/master/plugins/line-numbers/prism-line-numbers.css)（如果使用了行号显示功能）
     * 本主题的 [CSS 文件](https://github.com/TransparentLC/hexo-theme-akarin/blob/master/source/css/style.css)
 * 至少需要导入以下 JS：
     * [MDUI](https://github.com/zdhxiong/mdui/blob/v1/dist/js/mdui.min.js)
     * [medium-zoom](https://github.com/francoischalifour/medium-zoom#installation)
-    * PrismJS 本体和各个插件，参见 [Hexo 文档](https://hexo.io/zh-cn/docs/syntax-highlight.html#preprocess)（如果使用了浏览器端高亮）
     * 本主题的 [JS 文件](https://github.com/TransparentLC/hexo-theme-akarin/blob/master/source/js/script.js)
 * 如果对加载速度有更高的要求，可以尝试以下方法：
     * 将主题的 CSS 和 JS 文件进行 minify，相关工具：[Terser](https://try.terser.org/)、[swc](https://swc.rs/)、[lightningcss](https://lightningcss.dev/)
@@ -299,7 +293,7 @@ dns_prefetch:
 
 ### APlayer 标签插件
 
-内置了简单的 [APlayer](https://github.com/DIYgod/APlayer) 标签插件，可以快速在文章中插入音乐播放器。
+内置了简单的 [APlayer](https://github.com/liuly0322/aplayer-ts) 标签插件，可以快速在文章中插入音乐播放器。
 
 ```plain
 {% aplayerlite title author audioURL [coverURL] [lrcURL] %}
@@ -361,30 +355,23 @@ WebP、AVIF 等现代图片格式具有更好的压缩效率，可以节省流�
 
 ### HTML 压缩
 
-主题内置了使用 [html-minifier-terser](https://github.com/terser/html-minifier-terser) 实现的 HTML 压缩功能。已有的插件 [hexo-html-minifier](https://github.com/hexojs/hexo-html-minifier) 所依赖的 [html-minifier](https://github.com/kangax/html-minifier) 似乎已经弃坑了。启用压缩可以将 HTML 文件的大小缩减到 70-90% 左右。
+主题内置了使用 [htmlnano](https://htmlnano.netlify.app/) 实现的 HTML 压缩功能。启用压缩可以将 HTML 文件的大小缩减到 70-90% 左右。
 
-在主题配置中将 `minify_html.enable` 设为 `true` 即可启用，还可以添加其它的 html-minifier-terser 压缩选项：
+在主题配置中将 `minify_html.enable` 设为 `true` 即可启用，还可以添加其它的 htmlnano 压缩选项：
 
 ```yaml
 minify_html:
     enable: true
-    # 以下是默认设定，除非需要覆盖，否则并不需要写入主题配置
-    collapseWhitespace: true
-    collapseBooleanAttributes: true
-    decodeEntities: true
-    removeComments: true
+    # 以下是在 htmlnano.presets.safe 的基础上的默认设定
+    # 除非需要覆盖，否则并不需要写入主题配置
     removeRedundantAttributes: true
-    removeScriptTypeAttributes: true
-    removeStyleLinkTypeAttributes: true
-    removeEmptyAttributes: true
-    useShortDoctype: true
     sortAttributes: true
-    sortClassName: true
-    processConditionalComments: true
-    processScripts:
-        - application/ld+json
-    minifyCSS: true
-    minifyJS: true
+    removeComments: all
+    mergeStyles: true
+    mergeScripts: true
+    minifyCss: true
+    minifyJs: true
+    minifySvg: true
 ```
 
 ### MathJax 公式渲染
@@ -411,4 +398,77 @@ $$
         \dot{z} & = -\beta z + xy
     \end{align}
 $$
+```
+
+### 代码高亮
+
+主题自带了使用 [Shiki](https://shiki.style/) 进行代码高亮的支持，在 `_config.yml` 进行以下配置即可启用：
+
+```yaml
+syntax_highlighter: shiki
+shiki:
+    # 是否在 HTML 中加入 Shiki 相关的 CSS
+    # 如果不加入的话，需要自己导入主题自带的 /css/shiki.min.css
+    inject_styles: false
+    # 是否显示行号
+    line_number: true
+    # 是否启用 Shiki 的 transformer
+    # https://shiki.style/packages/transformers
+    transformer: true
+    # 需要高亮的语言
+    # https://shiki.style/languages
+    langs:
+        - asm
+        - bash
+        - c
+        - cmd
+        - css
+        - html
+        - js
+        - json
+        - php
+        - powershell
+        - python
+        - sql
+        - ts
+        - wasm
+        - yaml
+    # 语言别名，例如 svg 将按照 html 进行高亮
+    lang_alias:
+        svg: html
+        nasm: asm
+        yasm: asm
+    # 高亮主题
+    # https://shiki.style/themes
+    theme: nord
+    # 在浅色和深色模式下使用不同的主题
+    # 会覆盖上面的设置
+    themes:
+        light: one-light
+        dark: dark-plus
+```
+
+### 文章片段加密
+
+主题内置了对文章片段进行加密的功能，加密和解密均使用 [Web Crypto API](https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Crypto_API) 完成。
+
+实现方式：
+
+1. 根据 Markdown 文件路径和待加密的 HTML 内容使用 HKDF SHA-256 生成 16 + 12 bytes 的 salt + IV
+2. 使用 PBKDF2 SHA-256 和 salt 从 password 获取 16 bytes 的 key
+3. 使用 key 和 IV 对 HTML 内容进行 AES-GCM 加密
+4. 将 salt + IV 和密文写入最后生成的 HTML
+
+Salt 和 IV 可以是任意值且不需要保密，根据路径和内容使用 HKDF 生成的目的是保证每次生成 HTML 时 salt 和 IV 都是固定值，避免不必要的 diff。
+
+如果需要加密，使用 `{% encrypt password hint %}` 和 `{% encryptend %}` 包裹需要加密的部分即可。hint 是可选的，会出现在密码输入框的 placeholder 中。
+
+```md
+## 下载链接
+
+{% encrypt test 关注公众号“XXXX”，发送“XXXX”获取密码 %}
+
+https://example.com/
+
+{% encryptend %}
 ```

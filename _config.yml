@@ -3,13 +3,13 @@ drawer:
     menu:
         主页:
             href: /
-            icon: home
+            icon: mdi:home
         关于:
             href: /about/
-            icon: person
+            icon: mdi:account
         友链:
             href: /friend/
-            icon: link
+            icon: mdi:link
         归档:
             preset: archive
         RSS:
@@ -99,8 +99,6 @@ aplayer:
 
 stylesheets:
 - /css/mdui.min.css
-- /css/prism-line-numbers.min.css
-- /css/prism-vsc-dark-plus.min.css
 - /css/style.css
 
 scripts:

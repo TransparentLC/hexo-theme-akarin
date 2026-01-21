@@ -3,7 +3,7 @@
 <% } %>
 
 <% if (theme.aplayer.script) { %>
-    <!-- aplayer: <%- js({ src: theme.aplayer.script, async: true, onload: 'Array.isArray(window.aplayersLite)&&(aplayersLite = aplayersLite.map(e => new APlayer(e)))' }) %> -->
+    <!-- aplayer: <%- js({ src: theme.aplayer.script, async: true, onload: 'Array.isArray(window.aplayersLite)&&aplayersLite.map(e=>APlayer().init(e))' }) %> -->
 <% } %>
 
 <% if (theme.stats.busuanzi.enable) { %>

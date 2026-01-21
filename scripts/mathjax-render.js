@@ -3,6 +3,10 @@ require('mathjax').init({
         load: ['input/tex', 'output/svg'],
     },
 }).then(e => globalThis.MathJax = e);
+const IndexMap = require('./indexmap.js');
+
+const nonce = Math.random().toString(16).substring(2, 10);
+const mathjaxDefsIdPrefix = '__m_';
 
 // https://github.com/UziTech/marked-katex-extension/blob/main/src/index.js
 // 即使是服务端渲染，katex仍然需要在网页上加载字体，而mathjax支持将公式直接渲染成svg，所以这里选用mathjax
@@ -10,13 +14,23 @@ require('mathjax').init({
 const inlineStartRule = /(?<=\s|^)\${1,2}(?!\$)/;
 const inlineRule = /^(\${1,2})(?!\$)((?:\\.|[^\\\n])+?)(?<!\$)\1(?=\s|$)/;
 const blockRule = /^(\${1,2})\n((?:\\[^]|[^\\])+?)\n\1(?:\n|$)/;
-const renderer = token => {
-    const rendered = MathJax.startup.adaptor.outerHTML(MathJax.tex2svg(token.text, {
-        display: token.displayMode,
-    }));
-    // 不加\u200b的话，html-minifier会将<mjx-container>当成块级元素，删掉公式前后的空格
-    return token.displayMode ? rendered : `\u200b${rendered}\u200b`;
-};
+const renderer = token => `<!-- ${nonce} mathjax render: ${
+    btoa(
+        MathJax.startup.adaptor.outerHTML(
+            MathJax.tex2svg(token.text, { display: token.displayMode })
+        )
+    )
+} -->`;
+
+hexo.extend.injector.register('head_end', `
+    <style>
+        .MathJax[jax=SVG][display=true] {
+            display: block;
+            text-align: center;
+            margin: 1em 0;
+        }
+    </style>
+`, 'post');
 
 hexo.extend.filter.register('marked:extensions', function (extensions) {
     extensions.push({
@@ -64,4 +78,32 @@ hexo.extend.filter.register('marked:extensions', function (extensions) {
         },
         renderer,
     });
+});
+
+hexo.extend.injector.register('body_begin', `<!-- ${nonce} mathjax defs -->`);
+
+hexo.extend.filter.register('after_render:html', str => {
+    /** @type {IndexMap<string, string>} */
+    const im = new IndexMap(mathjaxDefsIdPrefix);
+
+    return str
+        .replace(
+            new RegExp(`<!-- ${nonce} mathjax render: ([A-Za-z\\d+/]+?=*?) -->`, 'g'),
+            (...m) => atob(m[1])
+                .replace(/<path id="MJX-\d+-(.+?-[\dA-F]+)" d="(.+?)"><\/path>/g, (...m) => {
+                    im.set(m[1], m[2]);
+                    return '';
+                })
+                .replace(/xlink:href="#MJX-\d+-(.+?-[\dA-F]+)"/g, (...m) => `xlink:href="#${im.getIndex(m[1])}"`)
+        )
+        .replaceAll(
+            `<!-- ${nonce} mathjax defs -->`,
+            im.valueMapping.size
+                ? `<svg class="mdui-hidden"><defs>${
+                    Array.from(im.valueMapping.entries())
+                        .map(([i, v]) => `<path id="${i}" d="${v}"/>`)
+                        .join('')
+                }</defs></svg>`
+                : '',
+        );
 });

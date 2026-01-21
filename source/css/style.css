@@ -1,52 +1,17 @@
-/* 导入思源黑体 */
-@font-face {
-    font-family: 'Noto Sans CJK SC';
-    font-style: normal;
-    font-weight: 100;
-    src: local('Noto Sans CJK SC Thin'), local('Source Han Sans SC ExtraLight'), local('Source Han Sans CN ExtraLight');
-}
-@font-face {
-    font-family: 'Noto Sans CJK SC';
-    font-style: normal;
-    font-weight: 300;
-    src: local('Noto Sans CJK SC Light'), local('Source Han Sans SC Light'), local('Source Han Sans CN Light');
-}
-@font-face {
-    font-family: 'Noto Sans CJK SC';
-    font-style: normal;
-    font-weight: 400;
-    src: local('Noto Sans CJK SC Regular'), local('Source Han Sans SC Regular'), local('Source Han Sans CN Regular');
-}
-@font-face {
-    font-family: 'Noto Sans CJK SC';
-    font-style: normal;
-    font-weight: 500;
-    src: local('Noto Sans CJK SC Medium'), local('Source Han Sans SC Medium'), local('Source Han Sans CN Medium');
-}
-@font-face {
-    font-family: 'Noto Sans CJK SC';
-    font-style: normal;
-    font-weight: 700;
-    src: local('Noto Sans CJK SC Bold'), local('Source Han Sans SC Bold'), local('Source Han Sans CN Bold');
-}
-@font-face {
-    font-family: 'Noto Sans CJK SC';
-    font-style: normal;
-    font-weight: 900;
-    src: local('Noto Sans CJK SC Black'), local('Source Han Sans SC Heavy'), local('Source Han Sans CN Heavy');
-}
 body {
     font-family:
+        -apple-system, BlinkMacSystemFont,
         Roboto,
-        Noto,
+        "Noto Sans",
         "Helvetica Neue",
         Helvetica,
         "Noto Sans CJK SC",
+        "Source Han Sans SC",
+        "Noto Sans SC",
+        "Source Han Sans CN",
         "PingFang SC",
         "Hiragino Sans GB",
         "Microsoft YaHei",
-        "微软雅黑",
-        Arial,
         sans-serif;
 }
 
@@ -177,13 +142,6 @@ button#akarin-top {
 }
 
 /* 文章内容 */
-.akarin-copy-code-btn {
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 1000;
-    color: var(--copy-code-btn-color);
-}
 @media (min-width:600px) {
     article.mdui-typo {
         font-size: 16px;
@@ -196,7 +154,17 @@ article.mdui-typo pre,
 article.mdui-typo code,
 article.mdui-typo pre code {
     line-height: 1.25;
-    font-family: "Cascadia Mono", "Segoe UI Mono", "Ubuntu Mono", "Roboto Mono", Menlo, Monaco, Consolas, monospace;
+    font-family:
+        "Cascadia Mono",
+        "JetBrains Mono",
+        "Segoe UI Mono",
+        "Ubuntu Mono",
+        "Roboto Mono",
+        Menlo,
+        Monaco,
+        Consolas,
+        monospace,
+        sans-serif;
 }
 article.mdui-typo img {
     max-height: 480px;
@@ -216,15 +184,40 @@ article.mdui-typo img.mdui-hoverable.medium-zoom-image {
         box-shadow .25s cubic-bezier(.4, 0, .2, 1)
         !important;
 }
+article.mdui-typo h1,
+article.mdui-typo h2,
+article.mdui-typo h3,
+article.mdui-typo h4,
+article.mdui-typo h5,
+article.mdui-typo h6 {
+    font-weight: bold;
+}
+article.mdui-typo h1 {
+    font-size: 2em;
+}
+article.mdui-typo h2 {
+    font-size: 1.5em;
+}
+article.mdui-typo h3 {
+    font-size: 1.25em;
+}
+article.mdui-typo h4 {
+    font-size: 1.125em;
+}
+article.mdui-typo h5,
+article.mdui-typo h6 {
+    font-size: 1em;
+}
 article.mdui-typo a.headerlink::before {
     position: initial;
     background-color: transparent;
     content: '#';
 }
 article.mdui-typo a.headerlink {
-    visibility: hidden;
+    opacity: 0;
     margin-left: -.65em;
     position: absolute;
+    transition: opacity .2s;
 }
 article.mdui-typo h1:hover .headerlink,
 article.mdui-typo h2:hover .headerlink,
@@ -232,7 +225,28 @@ article.mdui-typo h3:hover .headerlink,
 article.mdui-typo h4:hover .headerlink,
 article.mdui-typo h5:hover .headerlink,
 article.mdui-typo h6:hover .headerlink {
-    visibility: visible;
+    opacity: 1;
+}
+
+/* 文章加密 */
+[data-encrypted] {
+    max-width: 360px;
+}
+[data-encrypted] input[type=password] {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid rgba(0,0,0,.38);
+    border-radius: 2px;
+    background: none;
+}
+@media (prefers-color-scheme: dark) {
+    [data-encrypted] input[type=password] {
+        color: #fff;
+        border-color: rgba(255,255,255,.5);
+    }
+}
+[data-encrypted] input[type=password]:focus {
+    outline: none;
 }
 
 /* 其他工具类 */

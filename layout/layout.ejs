@@ -25,16 +25,13 @@ keywords = keywords.join(',');
 %>
 
 <!DOCTYPE html>
-<html lang="<%=config.language%>">
+<html lang="<%= config.language %>">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,shrink-to-fit=no">
-    <meta name="renderer" content="webkit">
-    <meta name="force-rendering" content="webkit">
     <meta name="author" content="<%= (is_post() && page.author) || config.author %>">
     <meta name="keywords" content="<%= keywords %>">
     <meta name="description" content="<%= description %>">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <% if (theme.head.site_verification.google) { %>
         <meta name="google-site-verification" content="<%= theme.head.site_verification.google %>">
     <% } %>

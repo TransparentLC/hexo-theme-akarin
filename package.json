@@ -1,12 +1,17 @@
 {
   "engine": {
-    "node": ">=18.0.0"
+    "node": ">=24.0.0"
   },
   "dependencies": {
-    "@swc/core": "^1.11.16",
-    "html-minifier-terser": "^7.2.0",
-    "lightningcss": "^1.29.3",
+    "@mdi/js": "*",
+    "@shikijs/transformers": "^3.21.0",
+    "@swc/core": "^1.15.10",
+    "base62": "^2.0.2",
+    "htmlnano": "^3.0.0",
+    "lightningcss": "^1.31.1",
     "mathjax": "^3.2.2",
-    "sharp": "^0.34.0"
+    "sharp": "^0.34.5",
+    "shiki": "^3.21.0",
+    "svgo": "^4.0.0"
   }
 }

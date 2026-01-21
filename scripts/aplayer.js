@@ -1,21 +1,11 @@
-/**
- * @param {UInt8Array} input
- * @returns {Number}
- */
-const fnv1a = input => {
-    let hash = 0x811C9DC5;
-    for (var i = 0; i < input.length; i++) {
-        hash ^= input[i];
-        hash += (hash << 24) + (hash << 8) + (hash << 7) + (hash << 4) + (hash << 1);
-    }
-    return hash >>> 0;
-};
+const base62 = require('base62');
+const aplayerIdPrefix = '__a_';
 
-const textEncoder = new TextEncoder;
+let counter = 0;
 
 const createAPlayerHTML = aplayerConfig => {
     const aplayerConfigJSON = JSON.stringify(aplayerConfig);
-    const id = `aplayer-${fnv1a(textEncoder.encode(aplayerConfigJSON)).toString(16).padStart(8, 0)}`;
+    const id = `${aplayerIdPrefix}${base62.encode(counter++)}`;
     let noscriptText = '';
     if (aplayerConfig.audio.title) {
         noscriptText = `<p><em>♪ ${aplayerConfig.audio.title}` + (aplayerConfig.audio.author ? ` - ${aplayerConfig.audio.author}` : '') + '</em></p>';
@@ -80,7 +70,7 @@ hexo.extend.tag.register(
 );
 
 hexo.extend.filter.register('after_render:html', (str, data) => {
-    if (str.includes('<script>(window.aplayersLite||(window.aplayersLite=[])).push')) {
+    if (str.includes('(window.aplayersLite||(window.aplayersLite=[])).push')) {
         str = str.replace(/<!-- aplayer: ([\s\S]+?) -->/g, '$1');
     }
     return str;

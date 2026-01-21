@@ -3,7 +3,7 @@
     class="mdui-fab mdui-text-color-grey-700 mdui-shadow-0 mdui-m-a-2"
     style="position:fixed;z-index:1"
     mdui-drawer="{target:'#akarin-drawer'}"
-><i class="mdui-icon material-icons">menu</i></button>
+><span class="mdui-icon"><%- svg_icon('mdi:menu') %></span></button>
 
 <!-- 左边的抽屉菜单 -->
 <nav id="akarin-drawer" class="mdui-drawer mdui-drawer-full-height mdui-shadow-6">
@@ -26,7 +26,7 @@
             <% if (theme.drawer.menu[key].preset === 'archive') { %>
                 <div>
                     <a class="mdui-list-item mdui-ripple" href="<%= url_for('/archives/') %>">
-                        <i class="mdui-list-item-icon mdui-icon material-icons">collections_bookmark</i>
+                        <span class="mdui-list-item-icon mdui-icon"><%- svg_icon('mdi:bookmark-box-multiple') %></span>
                         <span class="mdui-list-item-content"><%= key %></span>
                         <small class="mdui-color-theme-accent akarin-drawer-badge"><%= site.posts.length %></small>
                     </a>
@@ -35,7 +35,7 @@
                 <% if (theme.rss) { %>
                     <div>
                         <a class="mdui-list-item mdui-ripple" href="<%= url_for(theme.rss) %>">
-                            <i class="mdui-list-item-icon mdui-icon material-icons">rss_feed</i>
+                            <i class="mdui-list-item-icon mdui-icon"><%- svg_icon('mdi:rss') %></i>
                             <span class="mdui-list-item-content"><%= key %></span>
                         </a>
                     </div>
@@ -43,9 +43,9 @@
             <% } else if (theme.drawer.menu[key].preset === 'dark') { %>
                 <div class="mdui-collapse-item mdui-collapse-item-open">
                     <div class="mdui-list-item mdui-ripple mdui-collapse-item-header">
-                        <i class="mdui-list-item-icon mdui-icon material-icons">brightness_4</i>
+                        <span class="mdui-list-item-icon mdui-icon"><%- svg_icon('mdi:brightness-4') %></span>
                         <span class="mdui-list-item-content"><%= key %></span>
-                        <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                        <span class="mdui-collapse-item-arrow mdui-icon"><%- svg_icon('mdi:chevron-down') %></span>
                     </div>
                     <div class="mdui-list mdui-collapse-item-body">
                         <div class="mdui-list-item mdui-ripple" data-dark="auto">
@@ -63,9 +63,9 @@
                 <% if (theme.stats.busuanzi.enable) { %>
                     <div class="mdui-collapse-item mdui-collapse-item-open">
                         <div class="mdui-list-item mdui-ripple mdui-collapse-item-header">
-                            <i class="mdui-list-item-icon mdui-icon material-icons">insert_chart</i>
+                            <span class="mdui-list-item-icon mdui-icon"><%- svg_icon('mdi:chart-box') %></span>
                             <span class="mdui-list-item-content"><%= key %></span>
-                            <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                            <span class="mdui-collapse-item-arrow mdui-icon"><%- svg_icon('mdi:chevron-down') %></span>
                         </div>
                         <div class="mdui-list mdui-collapse-item-body">
                             <% if (theme.stats.busuanzi.site_pv) { %>
@@ -93,9 +93,9 @@
                 <div>
                     <a class="mdui-list-item mdui-ripple" href="<%= removeIndex(['http://', 'https://', '//'].find(e => theme.drawer.menu[key].href.startsWith(e)) ? theme.drawer.menu[key].href : url_for(theme.drawer.menu[key].href)) %>">
                         <% if (theme.drawer.menu[key].icon) { %>
-                            <i class="mdui-list-item-icon mdui-icon material-icons"><%= theme.drawer.menu[key].icon %></i>
+                            <span class="mdui-list-item-icon mdui-icon"><%- svg_icon(theme.drawer.menu[key].icon) %></span>
                         <% } else { %>
-                            <i class="mdui-list-item-icon"></i>
+                            <span class="mdui-list-item-icon"></span>
                         <% } %>
                         <span class="mdui-list-item-content"><%= key %></span>
                     </a>

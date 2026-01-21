@@ -41,6 +41,90 @@
             e.src = '<%= theme.comment.artalk.script || 'https://cdn.jsdelivr.net/npm/artalk@2/dist/Artalk.js' %>';
             e.async = true;
             e.onload = () => {
+                // LaTex公式渲染，使用第三方API而不是katex
+                // https://github.com/ArtalkJS/Artalk/blob/master/ui/plugin-katex/src/main.ts
+                Artalk.use(ctx => {
+                    let index = 0;
+                    const next = () => `__atk_tex_id_${index++}__`;
+                    /** @type {Record<String, { isBlock: Boolean; tex: String }>} */
+                    const texExprs = {};
+
+                    /**
+                     * @param tex {String}
+                     * @param isBlock {Boolean}
+                     * @returns
+                     */
+                    const getPlaceholder = (tex, isBlock) => {
+                        const key = next();
+                        texExprs[key] = { tex, isBlock };
+                        return key;
+                    };
+
+                    const blockMathExtension = {
+                        name: 'blockMath',
+                        level: 'block',
+                        /**
+                         * @param src {String}
+                         * @returns
+                         */
+                        tokenizer: src => {
+                            const cap = /^(?:\s{0,3})\$\$((?:[^\n]|\n[^\n])+?)\n{0,1}\$\$/.exec(src);
+                            if (cap) {
+                                return {
+                                    type: 'html',
+                                    raw: cap[0],
+                                    text: getPlaceholder(cap[1], true),
+                                };
+                            }
+                        },
+                    }
+
+                    const inlineMathExtension = {
+                        name: 'inlineMath',
+                        level: 'inline',
+                        /**
+                         * @param src {String}
+                         * @returns
+                         */
+                        start: src => {
+                            const idx = src.search(/\$.*?\$/);
+                            return idx !== -1 ? idx : src.length;
+                        },
+                        /**
+                         * @param src {String}
+                         * @returns
+                         */
+                        tokenizer: src => {
+                            const cap = /^\$(.*?)\$/.exec(src);
+                            if (cap) {
+                                return {
+                                    type: 'html',
+                                    raw: cap[0],
+                                    text: getPlaceholder(cap[1], false),
+                                };
+                            }
+                        },
+                    }
+
+                    ctx.on('mounted', () => {
+                        ctx.getMarked().use({ extensions: [blockMathExtension, inlineMathExtension] });
+                        ctx.updateConf({
+                            markedReplacers: [
+                                text => {
+                                    text = text.replace(/(__atk_tex_id_\d+__)/g, (_, key) =>  {
+                                        const { tex, isBlock } = texExprs[key];
+                                        delete texExprs[key];
+                                        const src = `https://www.zhihu.com/equation?tex=${encodeURIComponent(tex)}`;
+                                        return isBlock
+                                            ? `<p style="text-align:center"><img src="${src}"></p>`
+                                            : `<img style="vertical-align:middle" src="${src}">`;
+                                    })
+                                    return text;
+                                },
+                            ],
+                        });
+                    });
+                });
                 Artalk.use(ctx => ctx.on('list-loaded', () => ctx.getCommentNodes().forEach(e => Array.from(e.getRender().$content.querySelectorAll('img:not([atk-emoticon])')).forEach(e => {
                     e.classList.add('mdui-img-rounded');
                     mediumZoom(e, {

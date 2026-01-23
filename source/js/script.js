@@ -46,7 +46,7 @@ class LazyLoad {
             mask: 1 << 2,
         }),
     ]);
-    defaults = Object.freeze({
+    static defaults = Object.freeze({
         root: null,
         rootMargin: '0px',
         threshold: 0,
@@ -67,36 +67,39 @@ class LazyLoad {
      * }} config
      */
     constructor(image, config) {
-        if (this.constructor.imageSupport === undefined) {
-            Promise.all(
-                this.constructor.imageSupportTest.map(e => new Promise(resolve => {
-                    const testImg = new Image;
-                    testImg.onload = testImg.onerror = () => resolve(testImg.width && e.mask);
-                    testImg.src = e.img;
-                }))
-            ).then(result => {
-                result.forEach(e => this.constructor.imageSupport |= e);
-                consoleBadge(
-                    'Next-Gen Image',
-                    this.constructor.imageSupportTest
-                        .map(e => this.constructor.imageSupport & e.mask ? e.type : '')
-                        .filter(e => e)
-                        .join() || 'None',
-                    '#f6b'
-                );
-            });
-        }
-
-        this.config = {...this.defaults, ...config};
+        this.config = {...this.constructor.defaults, ...config};
         this.observer = new IntersectionObserver(entries => entries.forEach(entry => entry.isIntersecting && this.load(entry.target)), this.config);
-        image.forEach((/** @type {HTMLElement} */ el) => {
+
+        (
+            this.constructor.imageSupport === undefined
+                ? Promise.all(
+                    this.constructor.imageSupportTest.map(e => new Promise(resolve => {
+                        const testImg = new Image;
+                        testImg.onload = testImg.onerror = () => resolve(testImg.width && e.mask);
+                        testImg.src = e.img;
+                    }))
+                ).then(result => {
+                    result.forEach(e => this.constructor.imageSupport |= e);
+                    consoleBadge(
+                        'Next-Gen Image',
+                        this.constructor.imageSupportTest
+                            .map(e => this.constructor.imageSupport & e.mask ? e.type : '')
+                            .filter(e => e)
+                            .join() || 'None',
+                        '#f6b'
+                    );
+                })
+                : Promise.resolve()
+        ).then(() => image.forEach((/** @type {HTMLElement} */ el) => {
             (
-                this.config.loadingSrc ? this.setSrc(el, this.config.loadingSrc) : Promise.resolve()
+                this.config.loadingSrc
+                    ? this.setSrc(el, this.config.loadingSrc)
+                    : Promise.resolve()
             ).then(() => {
                 this.config.beforeObserve(el);
                 this.observer.observe(el);
             });
-        });
+        }));
     }
     /**
      * @param {HTMLElement} el
